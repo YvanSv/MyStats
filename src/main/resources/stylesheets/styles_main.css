@@ -1,0 +1,263 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    -fx-font-family: 'Jost';
+}
+
+.frame {
+    -fx-background-color: #1f1f1f;
+}
+
+.box-titre {
+    -fx-alignment: CENTER_LEFT;
+}
+
+.accueil {
+    -fx-alignment: center;
+    -fx-spacing: 20px;
+}
+
+.center {
+    -fx-text-alignment: center;
+}
+
+/* LISTES */
+
+.super-size {
+    -fx-font-family: BoldMarker;
+    -fx-font-size: 56px;
+}
+
+.big-size {
+    -fx-font-family: BoldMarker;
+    -fx-font-size: 40px;
+}
+
+.medium-size {
+    -fx-font-family: BoldMarker;
+    -fx-font-size: 32px;
+}
+
+.low-size {
+    -fx-font-family: BoldMarker;
+    -fx-font-size: 24px;
+}
+
+.very-low-size {
+    -fx-font-family: BoldMarker;
+    -fx-font-size: 20px;
+}
+
+.white {
+    -fx-text-fill: white;
+}
+
+.gray {
+    -fx-text-fill: gray;
+}
+
+.black {
+    -fx-text-fill: black;
+}
+
+.clickable:hover {
+    -fx-text-fill: #1ed760;
+}
+
+.content {
+    -fx-background-color: #1f1f1f;
+    -fx-alignment: top_center;
+    -fx-text-alignment: center;
+}
+
+.scroll-bar:vertical, .increment-button, .decrement-button, .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #555555;
+}
+
+.scroll-bar:vertical:hover .thumb {
+    -fx-background-color: #1ed760;
+}
+
+.ligne-pair, .ligne-pair-clickable {
+    -fx-text-fill: white;
+}
+
+.ligne-impair, .ligne-impair-clickable {
+    -fx-text-fill: #909090;
+}
+
+.ligne-pair-clickable:hover, .ligne-impair-clickable:hover {
+    -fx-text-fill: #1ed760;
+}
+
+/* ACCUEIL */
+
+.stats-grand {
+    -fx-font-size: 48px;
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
+}
+
+.stats-moyen {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
+}
+
+.stats-petit {
+    -fx-font-size: 20px;
+    -fx-text-fill: #909090;
+    -fx-text-alignment: left;
+}
+
+.bouton {
+    -fx-text-alignment: center;
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+}
+
+.bouton:hover {
+    -fx-text-fill: #1ed760;
+    -fx-border-color: #1ed760;
+}
+
+.bouton-supprimer {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+}
+
+.bouton-supprimer:hover {
+    -fx-text-fill: #fc3838;
+    -fx-border-color: #fc3838;
+}
+
+/* HEADER */
+
+.gras-900 {
+    -fx-font-weight: 900;
+}
+
+.gras-600 {
+    -fx-font-weight: 600;
+}
+
+.selected {
+    -fx-text-fill: #909090;
+}
+
+/* ARBRES */
+
+
+
+
+
+
+
+.texte-secondary {
+    -fx-font-size: 20px;
+    -fx-text-fill: #909090;
+    -fx-text-alignment: center;
+}
+
+.texte, .texte-clickable {
+    -fx-text-fill: white;
+}
+
+.texte-clickable:hover, .titre:hover {
+    -fx-text-fill: #1ed760;
+}
+
+.clickable:hover {
+    -fx-cursor: HAND;
+}
+
+/***
+  Pour les filtres
+ */
+
+.filtre {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+.transparent {
+    -fx-background-color: transparent;
+}
+
+
+/***
+  Pour les paramètres
+ */
+
+.parametres {
+    -fx-padding: 0px 30px 0px 30px;
+}
+
+.liste-fichiers {
+    -fx-border-color: white;
+    -fx-border-radius: 5;
+}
+
+.liste-fichiers:hover {
+    -fx-border-color: linear-gradient(to right bottom, white, #4d21b1);
+}
+
+.fichier {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-text-alignment: center;
+}
+
+.ligne-fichier {
+    -fx-alignment: CENTER_LEFT;
+}
+
+.ligne-fichier:hover .fichier {
+    -fx-text-fill: #1ed760;
+}
+
+.bouton-fichier {
+    -fx-text-alignment: center;
+    -fx-background-color: transparent;
+}
+
+.ligne-param {
+    -fx-spacing: 40px;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.textfield-param {
+    -fx-pref-width: 200px;
+}
+
+.popup {
+    -fx-background-color: #1f1f1f;
+}
+
+.fermer {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+}
+
+.fermer:hover {
+    -fx-text-fill: #1ed760;
+}
+
+.sous-titre {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+}
+
+.stats {
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-pref-width: 200px;
+}

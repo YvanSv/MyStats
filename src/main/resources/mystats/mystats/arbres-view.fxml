@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="mystats.mystats.VueArbres">
+    <VBox fx:id="accueil" styleClass="accueil" alignment="CENTER">
+        <Label text="Générer un arbre automatiquement avec vos données :" styleClass="low-size,white,center"/>
+        <HBox alignment="CENTER" spacing="20">
+            <padding>
+                <Insets top="30" bottom="30" left="20" right="20"/>
+            </padding>
+            <Button text="Musiques" onAction="#autoloadMusiques" styleClass="very-low-size,white,center,bouton"/>
+            <Button text="Albums" onAction="#autoloadAlbums" styleClass="very-low-size,white,center,bouton"/>
+            <Button text="Artistes" onAction="#autoloadArtistes" styleClass="very-low-size,white,center,bouton"/>
+        </HBox>
+        <Button text="Importer un fichier de données pour générer un arbre" onAction="#importer" styleClass="very-low-size,white,center,bouton"/>
+    </VBox>
+</AnchorPane>

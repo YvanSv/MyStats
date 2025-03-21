@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.image.ImageView?>
+<VBox alignment="TOP_CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="mystats.mystats.VueParametres">
+    <ScrollPane fx:id="scroll" styleClass="scroll-pane">
+        <VBox fx:id="content" styleClass="content,parametres" spacing="50">
+            <Label text="Paramètres" styleClass="low-size,white,center"/>
+            <VBox spacing="20">
+                <ScrollPane fx:id="scrollFichiers" styleClass="scroll-pane,liste-fichiers">
+                    <VBox fx:id="listeFichiers" spacing="10" styleClass="content"/>
+                </ScrollPane>
+                <HBox spacing="30">
+                    <Button text="Charger des fichiers" onAction="#chargerFichiers" styleClass="very-low-size,white,center,bouton">
+                        <graphic>
+                            <ImageView fx:id="charger" fitHeight="40" fitWidth="40"/>
+                        </graphic>
+                    </Button>
+                    <Button text="Supprimer tous les fichiers" onAction="#clear" styleClass="very-low-size,white,center,bouton-supprimer">
+                        <graphic>
+                            <ImageView fx:id="supprimer" fitHeight="40" fitWidth="40"/>
+                        </graphic>
+                    </Button>
+                </HBox>
+            </VBox>
+            <Line endX="500.0" strokeWidth="3">
+                <stroke>
+                    <LinearGradient>
+                        <stops>
+                            <Stop color="#1ed760"/>
+                        </stops>
+                    </LinearGradient>
+                </stroke>
+            </Line>
+            <HBox styleClass="ligne-param">
+                <Label text="Seuil pour qu'un titre sois considéré comme skippé (%)" styleClass="very-low-size,white"/>
+                <TextField fx:id="valueSeuil" onKeyReleased="#changerSeuil" styleClass="textfield-param"/>
+            </HBox>
+        </VBox>
+    </ScrollPane>
+</VBox>

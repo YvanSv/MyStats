@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="mystats.mystats.VueArtistes">
+    <GridPane fx:id="gridFiltres">
+        <padding>
+            <Insets top="20" bottom="20" left="20" right="20"/>
+        </padding>
+        <Label text="Minimum" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="filtre"/>
+        <Label text="Maximum" GridPane.columnIndex="2" GridPane.rowIndex="0" styleClass="filtre"/>
+        <Label text="Ecoutes" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="filtre"/>
+        <TextField fx:id="ecMin" GridPane.columnIndex="1" GridPane.rowIndex="1" onKeyReleased="#changeEcMin"/>
+        <TextField fx:id="ecMax" GridPane.columnIndex="2" GridPane.rowIndex="1" onKeyReleased="#changeEcMax"/>
+        <Label text="Complètes" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="filtre"/>
+        <TextField fx:id="coMin" GridPane.columnIndex="1" GridPane.rowIndex="2" onKeyReleased="#changeCoMin"/>
+        <TextField fx:id="coMax" GridPane.columnIndex="2" GridPane.rowIndex="2" onKeyReleased="#changeCoMax"/>
+        <Label text="Skips" GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="filtre"/>
+        <TextField fx:id="skMin" GridPane.columnIndex="1" GridPane.rowIndex="3" onKeyReleased="#changeSkMin"/>
+        <TextField fx:id="skMax" GridPane.columnIndex="2" GridPane.rowIndex="3" onKeyReleased="#changeSkMax"/>
+        <Label text="Ratio" GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="filtre"/>
+        <TextField fx:id="raMin" GridPane.columnIndex="1" GridPane.rowIndex="4" onKeyReleased="#changeRaMin"/>
+        <TextField fx:id="raMax" GridPane.columnIndex="2" GridPane.rowIndex="4" onKeyReleased="#changeRaMax"/>
+        <Label text="Artiste" GridPane.columnIndex="0" GridPane.rowIndex="5" styleClass="filtre"/>
+        <TextField fx:id="artName" GridPane.columnIndex="1" GridPane.rowIndex="5" onKeyReleased="#changeArtName"/>
+    </GridPane>
+    <BorderPane fx:id="vuePrincipale" styleClass="transparent">
+        <center>
+            <ScrollPane fx:id="scroll" styleClass="scroll-pane">
+                <VBox fx:id="content" styleClass="content"/>
+            </ScrollPane>
+        </center>
+    </BorderPane>
+</HBox>
