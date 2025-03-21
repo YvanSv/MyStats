@@ -102,6 +102,12 @@
     -fx-text-alignment: left;
 }
 
+.stats-secondary {
+    -fx-font-size: 32px;
+    -fx-text-fill: #909090;
+    -fx-text-alignment: right;
+}
+
 .stats-moyen {
     -fx-font-size: 24px;
     -fx-text-fill: white;
@@ -150,9 +156,6 @@
 }
 
 /* ARBRES */
-
-
-
 
 
 

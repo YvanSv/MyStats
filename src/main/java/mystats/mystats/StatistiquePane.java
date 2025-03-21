@@ -4,17 +4,21 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import mystats.mystats.utils.Couleur;
 
 public class StatistiquePane {
     private final VBox main;
 
-    public StatistiquePane(String main, String secondary) {
-        Label main1 = new Label(main);
-        main1.getStyleClass().addAll("low-size","white","center");
-        Label secondary1 = new Label(secondary);
-        secondary1.getStyleClass().add("texte-secondary");
-        this.main = new VBox(main1, secondary1);
+    public StatistiquePane(String mainTxt, String secondaryTxt) {
+        Label main1 = new Label(mainTxt);
+        main1.getStyleClass().addAll("stats-grand");
+        Label secondary1 = new Label(secondaryTxt);
+        secondary1.getStyleClass().addAll("stats-secondary");
+        main = new VBox(main1, secondary1);
+        main.setPrefWidth(600);
+        main.setAlignment(Pos.CENTER);
+        main.setBackground(Couleur.background(Color.GRAY));
     }
 
     public StatistiquePane(ImageView img, String position, String nom, String type) {

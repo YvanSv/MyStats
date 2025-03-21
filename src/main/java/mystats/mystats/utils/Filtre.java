@@ -4,10 +4,10 @@ import mystats.mystats.metier.donnees.*;
 
 public class Filtre {
     private static final Filtre filtre = new Filtre();
-
-    // type = 0 -> musiques
-    // type = 1 -> artistes
-    // type = 2 -> écoutes
+    public static final int TYPE_MUSIQUE = 0;
+    public static final int TYPE_ARTISTE = 1;
+    public static final int TYPE_ECOUTE = 2;
+    public static final int TYPE_ALBUM = 3;
     private int type = 0;
     private int methodeTri = 0;
     private int nbEcoutesCompletesMin = -1;
@@ -20,6 +20,7 @@ public class Filtre {
     private double ratioMax = -1;
     private String artiste = "";
     private String musique = "";
+    private String album = "";
     private Boolean nature = null;
     private Date dateDebut = null;
     private Date dateFin = null;
@@ -39,6 +40,7 @@ public class Filtre {
         ratioMax = -1;
         artiste = "";
         musique = "";
+        album = "";
         nature = null;
         dateDebut = null;
         dateFin = null;
@@ -61,6 +63,7 @@ public class Filtre {
     public void setRatioMax(double ratio) { ratioMax = ratio; }
     public void setArtiste(String a) { artiste = a; }
     public void setMusique(String a) { musique = a; }
+    public void setAlbum(String a) { album = a; }
     public void setNature(Boolean b) { nature = b; }
     public void setDateDebut(Date d) { dateDebut = d; }
     public void setDateFin(Date d) { dateFin = d; }
@@ -86,7 +89,9 @@ public class Filtre {
     }
 
     public boolean valide(Musique m) {
-        return (artiste.equals("") || m.getArtiste().getNom().toLowerCase().contains(artiste.toLowerCase())) && valide((Donnee) m);
+        return ((artiste.equals("") || m.getArtiste().getNom().toLowerCase().contains(artiste.toLowerCase())) &&
+                ((album.equals("")) || m.getAlbum().getNom().toLowerCase().contains(album.toLowerCase()))) &&
+                valide((Donnee) m);
     }
 
     public boolean valide(Album a) {
@@ -98,6 +103,7 @@ public class Filtre {
         if (!musique.equals("") && !e.getNom().equals(musique)) return false;
         if (dateDebut != null && e.getDate().avant(dateDebut) && !dateDebut.memeDate(e.getDate())) return false;
         if (dateFin   != null && !e.getDate().avant(dateFin)  && !dateFin  .memeDate(e.getDate())) return false;
+        if (!album.equals("") && !album.equals(e.getAlbum().getNom())) return false;
         return artiste.equals("") || e.getArtiste().getNom().toLowerCase().contains(artiste.toLowerCase());
     }
 

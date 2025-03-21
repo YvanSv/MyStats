@@ -26,8 +26,8 @@
     <center>
         <VBox fx:id="accueil" styleClass="accueil">
             <Label text="Aucun fichier importé, rendez-vous dans les paramètres ou cliquez ici :" styleClass="medium-size,white,center"/>
-            <Button text="Importer des données" onAction="#importer" styleClass="low-size,white,bouton"/>
-            <Button text="En savoir plus sur les données" onAction="#infos" styleClass="low-size,white,bouton"/>
+            <Button text="Importer des données" onAction="#importer" styleClass="low-size,white,bouton,clickable"/>
+            <Button text="En savoir plus sur les données" onAction="#infos" styleClass="low-size,white,bouton,clickable"/>
         </VBox>
     </center>
 </BorderPane>

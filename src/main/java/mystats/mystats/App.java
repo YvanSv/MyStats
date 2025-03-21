@@ -20,14 +20,14 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         App.stage = stage;
-        FXMLLoader fxmlLoader = new FXMLLoader(Frame.class.getResource("frame-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("frame-view.fxml"));
         fxmlLoader.setControllerFactory(iC -> new Frame());
         root = fxmlLoader.load();
         Scene scene = new Scene(root, 480, 480);
         scene.widthProperty().addListener((observable, oldValue, newValue) -> Tailles.setTailles(root.getWidth(),root.getHeight()));
         scene.heightProperty().addListener((observable, oldValue, newValue) -> Tailles.setTailles(root.getWidth(),root.getHeight()));
-        scene.getStylesheets().add(getClass().getResource("/stylesheets/styles_main.css").toExternalForm());
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/logo-micro.png")));
+        scene.getStylesheets().add(getClass().getResource("stylesheets/styles_main.css").toExternalForm());
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("img/logo-micro.png")));
         stage.setMaximized(true);
         stage.setTitle("MyStats");
         stage.setScene(scene);

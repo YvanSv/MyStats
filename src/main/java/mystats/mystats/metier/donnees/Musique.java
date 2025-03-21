@@ -37,6 +37,10 @@ public class Musique extends Donnee{
         return artiste;
     }
 
+    public Album getAlbum() {
+        return album;
+    }
+
     public int getNbEcoutes() {
         return lstEcoutes.size();
     }

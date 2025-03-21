@@ -30,7 +30,7 @@ public class VueAlbums  extends VuePrincipale {
             content.getChildren().add(ImgPane.getTitresAlbums());
         // Ajouter toutes les lignes
         for (int i = printed; i < printed + nbAffiche; i++)
-            content.getChildren().add(new ImgPane(i+1,res.get(i),vueGraphique));
+            content.getChildren().add(new ImgPane(i+1,res.get(i),vueGraphique,frame));
         // Rajouter la dernière ligne (charger plus)
         if (nbAffiche >= 50)
             content.getChildren().add(new ImgPane());

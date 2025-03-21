@@ -50,7 +50,7 @@ public class VueParametres {
             hbox.getStyleClass().add("ligne-fichier");
 
             Label supprimer = new Label();
-            ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/img/moins2.png")));
+            ImageView img = new ImageView(new Image(getClass().getResourceAsStream("img/moins2.png")));
             img.setFitHeight(Tailles.HEIGHT_MINI_LOGO);
             img.setPreserveRatio(true);
             supprimer.setGraphic(img);
@@ -83,8 +83,8 @@ public class VueParametres {
     }
 
     @FXML private void initialize() {
-        charger.setImage(new Image(getClass().getResourceAsStream("/img/plus2.png")));
-        supprimer.setImage(new Image(getClass().getResourceAsStream("/img/moins2.png")));
+        charger.setImage(new Image(getClass().getResourceAsStream("img/plus2.png")));
+        supprimer.setImage(new Image(getClass().getResourceAsStream("img/moins2.png")));
         valueSeuil.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("-?\\d*(\\.\\d*)?")) {
                 valueSeuil.setText(oldValue);

@@ -37,11 +37,11 @@ public class Frame {
 
     @FXML private void initialize() {
         box_titre.spacingProperty().bind(App.stage.widthProperty().multiply(0.5/(double)(box_titre.getChildren().size())));
-        ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/img/logo-micro.png")));
+        ImageView img = new ImageView(new Image(getClass().getResourceAsStream("img/logo-micro.png")));
         img.setFitHeight(Tailles.HEIGHT_LOGO);
         img.setPreserveRatio(true);
         logo.setGraphic(img);
-        img = new ImageView(new Image(getClass().getResourceAsStream("/img/parametres.png")));
+        img = new ImageView(new Image(getClass().getResourceAsStream("img/parametres.png")));
         img.setFitHeight(Tailles.HEIGHT_LOGO / 2);
         img.setPreserveRatio(true);
         parametres.setGraphic(img);
@@ -51,9 +51,19 @@ public class Frame {
     public void actualiser() {
         clear = false;
         int type = Filtre.getInstance().getType();
-        if (type == 0) vueMusiques();
-        else if (type == 1) setSelected(artistes);
-        else if (type == 2) vueHistorique();
+        if (type == 0) {
+            vueMusiques();
+            setSelected(musiques);
+        } else if (type == 1) {
+            vueArtistes();
+            setSelected(artistes);
+        } else if (type == 2) {
+            vueHistorique();
+            setSelected(historique);
+        } else if (type == 3) {
+            vueAlbums();
+            setSelected(albums);
+        }
         //if (frame.getCenter() == graphiques) vueGraphique();
         ImgPane.resetTitres();
         clear = true;
@@ -62,6 +72,7 @@ public class Frame {
     private void setSelected(Label l) {
         musiques.getStyleClass().remove("selected");
         artistes.getStyleClass().remove("selected");
+        albums.getStyleClass().remove("selected");
         historique.getStyleClass().remove("selected");
         graphiques.getStyleClass().remove("selected");
         arbres.getStyleClass().remove("selected");
