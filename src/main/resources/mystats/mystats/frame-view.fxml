@@ -15,19 +15,13 @@
                 <Label fx:id="titre" text="MyStats" styleClass="big-size,white,gras-900,center,clickable"/>
             </HBox>
             <Label fx:id="musiques" text="Musiques" onMouseClicked="#vueMusiques" alignment="CENTER" styleClass="medium-size,white,gras-600,center,clickable"/>
-            <Label fx:id="artistes" text="Artistes" onMouseClicked="#vueArtistes" styleClass="medium-size,white,gras-600,center,clickable"/>
             <Label fx:id="albums" text="Albums" onMouseClicked="#vueAlbums" styleClass="medium-size,white,gras-600,center,clickable"/>
+            <Label fx:id="artistes" text="Artistes" onMouseClicked="#vueArtistes" styleClass="medium-size,white,gras-600,center,clickable"/>
             <Label fx:id="historique" text="Historique" onMouseClicked="#vueHistorique" styleClass="medium-size,white,gras-600,center,clickable"/>
-            <Label fx:id="graphiques" text="Graphiques" onMouseClicked="#vueGraphique" styleClass="medium-size,white,gras-600,center,clickable"/>
-            <Label fx:id="arbres" text="Arbres" onMouseClicked="#vueArbres" styleClass="medium-size,white,gras-600,center,clickable"/>
-            <Label fx:id="parametres" onMouseClicked="#vueParametres" styleClass="medium-size,white,gras-600,center,clickable"/>
+            <ComboBox fx:id="hamburger" promptText="≡" styleClass="medium-size,gras-600,center,clickable"/>
         </HBox>
     </top>
     <center>
-        <VBox fx:id="accueil" styleClass="accueil">
-            <Label text="Aucun fichier importé, rendez-vous dans les paramètres ou cliquez ici :" styleClass="medium-size,white,center"/>
-            <Button text="Importer des données" onAction="#importer" styleClass="low-size,white,bouton,clickable"/>
-            <Button text="En savoir plus sur les données" onAction="#infos" styleClass="low-size,white,bouton,clickable"/>
-        </VBox>
+        <VBox fx:id="accueil" styleClass="accueil"/>
     </center>
 </BorderPane>

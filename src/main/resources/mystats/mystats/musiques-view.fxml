@@ -11,19 +11,19 @@
         </padding>
         <Label text="Minimum" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="filtre"/>
         <Label text="Maximum" GridPane.columnIndex="2" GridPane.rowIndex="0" styleClass="filtre"/>
-        <Label text="Ecoutes" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="filtre"/>
+        <Label fx:id="lblListened" text="Ecoutes" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="filtre"/>
         <TextField fx:id="ecMin" GridPane.columnIndex="1" GridPane.rowIndex="1" onKeyReleased="#changeEcMin"/>
         <TextField fx:id="ecMax" GridPane.columnIndex="2" GridPane.rowIndex="1" onKeyReleased="#changeEcMax"/>
         <Label text="Complètes" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="filtre"/>
         <TextField fx:id="coMin" GridPane.columnIndex="1" GridPane.rowIndex="2" onKeyReleased="#changeCoMin"/>
         <TextField fx:id="coMax" GridPane.columnIndex="2" GridPane.rowIndex="2" onKeyReleased="#changeCoMax"/>
-        <Label text="Skips" GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="filtre"/>
+        <Label fx:id="lblSkipped" text="Skips" GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="filtre"/>
         <TextField fx:id="skMin" GridPane.columnIndex="1" GridPane.rowIndex="3" onKeyReleased="#changeSkMin"/>
         <TextField fx:id="skMax" GridPane.columnIndex="2" GridPane.rowIndex="3" onKeyReleased="#changeSkMax"/>
         <Label text="Ratio" GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="filtre"/>
         <TextField fx:id="raMin" GridPane.columnIndex="1" GridPane.rowIndex="4" onKeyReleased="#changeRaMin"/>
         <TextField fx:id="raMax" GridPane.columnIndex="2" GridPane.rowIndex="4" onKeyReleased="#changeRaMax"/>
-        <Label text="Artiste" GridPane.columnIndex="0" GridPane.rowIndex="5" styleClass="filtre"/>
+        <Label fx:id="lblArtist" text="Artiste" GridPane.columnIndex="0" GridPane.rowIndex="5" styleClass="filtre"/>
         <TextField fx:id="artName" GridPane.columnIndex="1" GridPane.rowIndex="5" onKeyReleased="#changeArtName"/>
     </GridPane>
     <BorderPane fx:id="vuePrincipale" styleClass="transparent">

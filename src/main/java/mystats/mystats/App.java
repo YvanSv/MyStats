@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import mystats.mystats.utils.Langue;
 import mystats.mystats.utils.Tailles;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         App.stage = stage;
+        Langue.english();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("frame-view.fxml"));
         fxmlLoader.setControllerFactory(iC -> new Frame());
         root = fxmlLoader.load();

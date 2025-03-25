@@ -3,16 +3,23 @@ package mystats.mystats;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import mystats.mystats.utils.Filtre;
+import mystats.mystats.utils.Langue;
 import mystats.mystats.utils.Tailles;
+
+import java.util.ResourceBundle;
 
 public abstract class VuePrincipale {
     @FXML protected GridPane gridFiltres;
+    @FXML private Label lblListened;
+    @FXML private Label lblSkipped;
+    @FXML private Label lblArtist;
     @FXML protected TextField ecMin;
     @FXML protected TextField ecMax;
     @FXML protected TextField coMin;
@@ -36,6 +43,11 @@ public abstract class VuePrincipale {
     }
 
     @FXML private void initialize() {
+        ResourceBundle language = Langue.bundle;
+        lblListened.setText(language.getString("listened"));
+        lblSkipped.setText(language.getString("skipped"));
+        lblArtist.setText(language.getString("artist"));
+
         gridFiltres.setAlignment(Pos.CENTER);
         for (Node n : gridFiltres.getChildren())
             if (n instanceof TextField) ((TextField)n).setPrefSize(50,20);

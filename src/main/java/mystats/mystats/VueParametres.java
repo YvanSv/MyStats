@@ -3,10 +3,7 @@ package mystats.mystats;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -19,20 +16,28 @@ import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import mystats.mystats.metier.DataReader;
 import mystats.mystats.utils.Fichier;
+import mystats.mystats.utils.Langue;
 import mystats.mystats.utils.Parametres;
 import mystats.mystats.utils.Tailles;
 
 import java.io.File;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class VueParametres {
+    @FXML private Label lblParam;
     @FXML private VBox listeFichiers;
     @FXML private VBox content;
     @FXML private ScrollPane scroll;
     @FXML private ScrollPane scrollFichiers;
+    @FXML private Button btnLoad;
+    @FXML private Button btnDelete;
     @FXML private ImageView charger;
     @FXML private ImageView supprimer;
+    @FXML private Label lblThreshold;
     @FXML private TextField valueSeuil;
+    @FXML private Label lblLanguage;
+    @FXML private ComboBox<String> langues;
     private final Frame frame;
 
     public VueParametres(Frame frame) {
@@ -72,8 +77,9 @@ public class VueParametres {
         }
 
         if (DataReader.getInstance().getFichiers().size() == 0) {
-            Label aucun = new Label("Aucun fichier chargé");
-            aucun.getStyleClass().add("texte-titre");
+            ResourceBundle language = Langue.bundle;
+            Label aucun = new Label(language.getString("noFileLoaded"));
+            aucun.getStyleClass().addAll("texte-titre","white","low-size");
             listeFichiers.getChildren().add(aucun);
         }
     }
@@ -83,14 +89,20 @@ public class VueParametres {
     }
 
     @FXML private void initialize() {
+        ResourceBundle language = Langue.bundle;
+        lblParam.setText(language.getString("parameters"));
+        btnLoad.setText(language.getString("importDatas"));
+        btnDelete.setText(language.getString("deleteAllFiles"));
         charger.setImage(new Image(getClass().getResourceAsStream("img/plus2.png")));
         supprimer.setImage(new Image(getClass().getResourceAsStream("img/moins2.png")));
+        lblThreshold.setText(language.getString("thresholdSkipped"));
         valueSeuil.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("-?\\d*(\\.\\d*)?")) {
                 valueSeuil.setText(oldValue);
             }
         });
         valueSeuil.setText(Parametres.getInstance().getTauxPourEtreFull()+"");
+        lblLanguage.setText(language.getString("language"));
         scroll.fitToWidthProperty().set(true);
         scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollFichiers.fitToWidthProperty().set(true);
@@ -122,6 +134,14 @@ public class VueParametres {
         DataReader.getInstance().setNature(DataReader.getInstance().getHistorique());
     }
 
+    @FXML private void changeLanguage() {
+        String value = langues.getValue();
+        if (value.equals("Français"))
+            Langue.french();
+        else if (value.equals("English"))
+            Langue.english();
+    }
+
     private void ajouterPopupClick(Label nom, Fichier f) {
         Popup popup = new Popup();
         BorderPane root = new BorderPane();
@@ -139,17 +159,18 @@ public class VueParametres {
         VBox center = new VBox();
         center.setSpacing(30);
         center.setPadding(new Insets(20,20,20,20));
-        Label txtEmplacement = new Label("Emplacement du fichier : " + f.getLien());
+        ResourceBundle language = Langue.bundle;
+        Label txtEmplacement = new Label(language.getString("fileLocation") + " : " + f.getLien());
         GridPane stats = new GridPane();
         stats.setAlignment(Pos.CENTER);
 
-        Label statistiques = new Label("Statistiques");
-        Label nbEcoutes = new Label(f.getNbEcoutes() + " écoutes");
-        Label nbCompletes = new Label(f.getNbEcoutesCompletes() + " complètes");
-        Label nbSkips = new Label(f.getNbEcoutesSkips() + " skips");
-        Label nbMusiques = new Label(f.getNbMusiques() + " musiques");
-        Label nbArtistes = new Label(f.getNbArtistes() + " artistes");
-        Label tempsEcoute = new Label(f.getTempsEcoute() + " minutes");
+        Label statistiques = new Label(language.getString("stats"));
+        Label nbEcoutes = new Label(f.getNbEcoutes() + " " + language.getString("listenings"));
+        Label nbCompletes = new Label(f.getNbEcoutesCompletes() + " " + language.getString("fullyListened").toLowerCase());
+        Label nbSkips = new Label(f.getNbEcoutesSkips() + " " + language.getString("skips").toLowerCase());
+        Label nbMusiques = new Label(f.getNbMusiques() + " " + language.getString("musics").toLowerCase());
+        Label nbArtistes = new Label(f.getNbArtistes() + " " + language.getString("artists").toLowerCase());
+        Label tempsEcoute = new Label(f.getTempsEcoute() + " " + language.getString("minutes"));
 
         statistiques.setPadding(new Insets(10,10,10,10));
         nbMusiques.setPadding(new Insets(0,10,0,10));
@@ -194,7 +215,6 @@ public class VueParametres {
         });
 
         nom.setOnMouseClicked(e -> {
-            System.out.println(f.getNom() + " : " + f.getNbEcoutes() + " (" + f.getNbEcoutesCompletes() +"/"+ f.getNbEcoutesSkips()+")");
             if (!popup.isShowing()) {
                 App.addFond(overlay);
                 popup.show(App.stage);

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Fichier {
     private final String nom,lien;
     private final ArrayList<Ecoute> lstEcoutes = new ArrayList<>();
-    private int nbMusiques = 0, nbArtistes = 0, nbAlbums = 0, tempsEcoute = 0;
+    private int nbMusiques = 0, nbArtistes = 0, nbAlbums = 0;
 
     public Fichier(String nom, String lien) {
         this.nom = nom;
@@ -24,7 +24,6 @@ public class Fichier {
 
     public void add(Ecoute e) {
         lstEcoutes.add(e);
-        tempsEcoute += e.getTempsEcoute() / 1000 / 60;
     }
 
     public void addMusique() {
@@ -70,7 +69,10 @@ public class Fichier {
     }
 
     public int getTempsEcoute() {
-        return tempsEcoute;
+        int res = 0;
+        for(Ecoute e : lstEcoutes)
+            res += e.getTempsEcoute();
+        return res;
     }
 
     public boolean equals(Fichier f) {

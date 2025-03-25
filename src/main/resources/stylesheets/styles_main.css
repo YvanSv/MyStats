@@ -155,6 +155,25 @@
     -fx-text-fill: #909090;
 }
 
+.combo-box .list-cell {
+    -fx-background-color: #1f1f1f; /* Couleur de fond des options */
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #1f1f1f;
+}
+
+.combo-box .arrow-button {
+    -fx-opacity: 0;  /* Rendre invisible */
+    -fx-padding: 0;   /* Supprime les marges */
+    -fx-background-color: transparent; /* Rend l'arrière-plan transparent */
+}
+
+.combo-box .text-field {
+    -fx-prompt-text-fill: rgb(255, 255, 255);
+    -fx-text-alignment: right;
+}
+
 /* ARBRES */
 
 

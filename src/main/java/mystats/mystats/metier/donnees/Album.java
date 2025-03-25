@@ -74,7 +74,7 @@ public class Album extends Donnee {
                     img = new ImageView(image);
                     img.setFitWidth(300);
                     img.setPreserveRatio(true);
-                } else System.out.println("Impossible de récupérer l'image du morceau.");
+                }//  else System.out.println("Impossible de récupérer l'image du morceau.");
             } else System.out.println("Impossible d'obtenir un token d'accès.");
         }
         return img;

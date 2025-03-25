@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import mystats.mystats.metier.DataReader;
 import mystats.mystats.metier.donnees.Album;
 import mystats.mystats.metier.donnees.Artiste;
@@ -103,16 +104,24 @@ public class VueArbres extends VuePrincipale {
             VBox x = new VBox(img,nom);
             x.setAlignment(Pos.CENTER);
             x.setPrefSize(Tailles.WIDTH_SCREEN / 3, Tailles.HEIGHT_SCROLL / 2);
-            // x.setBackground(Couleur.background(Couleur.getAverageColor(img.getImage())));
             Donnee finalD = d;
-            img.setOnMouseEntered(e -> x.setBackground(Couleur.background(Couleur.getAverageColor(img.getImage()))));
-            img.setOnMouseExited (e -> x.setBackground(null));
-
-            img.getStyleClass().addAll("clickable");
-            img.setOnMouseClicked(e -> {
-                duel.setChoix(finalD);
-                Arbre.getInstance().next(duel);
-            });
+            if (img.getImage() == null) {
+                x.setOnMouseEntered(e -> x.setBackground(Couleur.background(Color.GRAY)));
+                x.setOnMouseExited (e -> x.setBackground(null));
+                x.getStyleClass().addAll("clickable");
+                x.setOnMouseClicked(e -> {
+                    duel.setChoix(finalD);
+                    Arbre.getInstance().next(duel);
+                });
+            } else {
+                img.setOnMouseEntered(e -> x.setBackground(Couleur.background(Couleur.getAverageColor(img.getImage()))));
+                img.setOnMouseExited (e -> x.setBackground(null));
+                img.getStyleClass().addAll("clickable");
+                img.setOnMouseClicked(e -> {
+                    duel.setChoix(finalD);
+                    Arbre.getInstance().next(duel);
+                });
+            }
             choix.getChildren().add(x);
         }
 

@@ -4,20 +4,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import mystats.mystats.metier.DataReader;
-import mystats.mystats.utils.Fichier;
-import mystats.mystats.utils.Filtre;
-import mystats.mystats.utils.ImgPane;
-import mystats.mystats.utils.Tailles;
+import mystats.mystats.utils.*;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class Frame {
     @FXML private BorderPane frame;
@@ -28,15 +27,21 @@ public class Frame {
     @FXML private Label artistes;
     @FXML private Label albums;
     @FXML private Label historique;
-    @FXML private Label graphiques;
-    @FXML private Label arbres;
-    @FXML private Label parametres;
+    private Label graphiques;
+    private Label arbres;
+    private Label parametres;
     @FXML private Pane accueil;
+    @FXML private ComboBox<Label> hamburger;
     private final ArrayList<StatistiquePane> stats = new ArrayList<>();
     private boolean clear = true;
 
     @FXML private void initialize() {
-        box_titre.spacingProperty().bind(App.stage.widthProperty().multiply(0.5/(double)(box_titre.getChildren().size())));
+        ResourceBundle language = Langue.bundle;
+        musiques.setText(language.getString("musics"));
+        artistes.setText(language.getString("artists"));
+        albums.setText(language.getString("albums"));
+        historique.setText(language.getString("historic"));
+        box_titre.spacingProperty().bind(App.stage.widthProperty().multiply(0.43 / (box_titre.getChildren().size() - 2)));
         ImageView img = new ImageView(new Image(getClass().getResourceAsStream("img/logo-micro.png")));
         img.setFitHeight(Tailles.HEIGHT_LOGO);
         img.setPreserveRatio(true);
@@ -44,8 +49,38 @@ public class Frame {
         img = new ImageView(new Image(getClass().getResourceAsStream("img/parametres.png")));
         img.setFitHeight(Tailles.HEIGHT_LOGO / 2);
         img.setPreserveRatio(true);
-        parametres.setGraphic(img);
         titre.setAlignment(Pos.CENTER);
+
+        Label defaultSelec = new Label("≡");
+        graphiques = new Label(language.getString("charts"));
+        arbres = new Label(language.getString("trees"));
+        parametres = new Label(language.getString("parameters"));
+        defaultSelec.getStyleClass().addAll("medium-size","white","center","clickable");
+        graphiques.getStyleClass().addAll("low-size","white","center","clickable");
+        arbres.getStyleClass().addAll("low-size","white","center","clickable");
+        parametres.getStyleClass().addAll("low-size","white","center","clickable");
+        hamburger.getStyleClass().addAll("transparent");
+        hamburger.getItems().addAll(defaultSelec,graphiques,arbres,parametres);
+        hamburger.setOnAction(e -> {
+            if (hamburger.getValue() == graphiques) vueGraphique();
+            else if (hamburger.getValue() == arbres) vueArbres();
+            else if (hamburger.getValue() == parametres) vueParametres();
+            hamburger.getSelectionModel().select(0);
+            hamburger.getItems().removeAll(graphiques,arbres,parametres);
+            hamburger.getItems().addAll(graphiques,arbres,parametres);
+        });
+
+        Label noFile = new Label(language.getString("noFileImported"));
+        noFile.getStyleClass().addAll("medium-size","white","center");
+
+        Button importFile = new Button(language.getString("importDatas"));
+        importFile.setOnAction(e -> importer());
+        importFile.getStyleClass().addAll("low-size","white","bouton","clickable");
+
+        Button infosDatas = new Button(language.getString("infosDatas"));
+        infosDatas.setOnAction(e -> infos());
+        infosDatas.getStyleClass().addAll("low-size","white","bouton","clickable");
+        accueil.getChildren().addAll(noFile,importFile,infosDatas);
     }
 
     public void actualiser() {
@@ -86,7 +121,6 @@ public class Frame {
         setSelected(null);
         if (DataReader.getInstance().getFichiers().size() != 0) {
             HBox accueil = new HBox();
-            //accueil.setPrefSize(Tailles.WIDTH_SCREEN,Tailles.HEIGHT_LISTE);
             accueil.setStyle("-fx-spacing: " + Tailles.WIDTH_SCREEN * 0.01);
             frame.setCenter(accueil);
             int[] indiceChoisis = new int[3];
@@ -104,12 +138,13 @@ public class Frame {
             accueil.setAlignment(Pos.CENTER);
             this.accueil = accueil;
         } else if (accueil.getChildren().size() != 2) {
-            Label txt = new Label("Aucun fichier importé, rendez-vous dans les paramètres ou cliquez ici :");
+            ResourceBundle language = Langue.bundle;
+            Label txt = new Label(language.getString("noFileImported"));
             txt.getStyleClass().addAll("medium-size","white","center");
-            Button btn = new Button("Importer des données");
+            Button btn = new Button(language.getString("importDatas"));
             btn.getStyleClass().addAll("low-size","white","bouton");
             btn.setOnAction(e -> importer());
-            Button infos = new Button("En savoir plus sur les données");
+            Button infos = new Button(language.getString("infosDatas"));
             infos.getStyleClass().addAll("low-size","white","bouton");
             infos.setOnAction(e -> infos());
             accueil = new VBox(txt,btn,infos);
@@ -158,11 +193,11 @@ public class Frame {
         catch (Exception e) { e.printStackTrace(); }
     }
 
-    @FXML private void vueGraphique() {
+    private void vueGraphique() {
         System.out.println("vueGraphique");
     }
 
-    @FXML private void vueArbres() {
+    private void vueArbres() {
         if (clear) Filtre.getInstance().clear();
         setSelected(arbres);
         FXMLLoader loader = new FXMLLoader();
@@ -172,7 +207,7 @@ public class Frame {
         catch (Exception e) { e.printStackTrace(); }
     }
 
-    @FXML private void vueParametres() {
+    private void vueParametres() {
         setSelected(parametres);
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Frame.class.getResource("parametres-view.fxml"));
@@ -207,24 +242,25 @@ public class Frame {
 
     public void creerStats() {
         DataReader dr = DataReader.getInstance();
+        ResourceBundle language = Langue.bundle;
         if (dr.getFichiers().size() != 0) {
             stats.clear();
-            stats.add(new StatistiquePane(dr.getNbEcoutes()+"","écoutes"));
-            stats.add(new StatistiquePane(dr.getNbArtistes()+"","artistes"));
-            stats.add(new StatistiquePane(dr.getNbMusiques()+"","musiques"));
-            stats.add(new StatistiquePane(dr.getNbEcoutesCompletes()+"","écoutes complètes"));
-            stats.add(new StatistiquePane(dr.getNbSkips()+"","skips"));
-            stats.add(new StatistiquePane(dr.getPourcentEcoutesCompletes()+"","% d'écoutes complètes"));
-            stats.add(new StatistiquePane(dr.getPourcentSkips(),"% de skips"));
-            stats.add(new StatistiquePane(dr.getTopMusiqueEcoutes().getImage(),"#1" , dr.getTopMusiqueEcoutes().getNom(), "des écoutes"));
-            stats.add(new StatistiquePane(dr.getTopMusiqueEcoutesCompletes().getImage(),"#1" , dr.getTopMusiqueEcoutesCompletes().getNom(), "des écoutes complètes"));
-            stats.add(new StatistiquePane(dr.getTopMusiqueSkips().getImage(),"#1" , dr.getTopMusiqueSkips().getNom(), "des skips"));
-            stats.add(new StatistiquePane(dr.getTopArtisteEcoutes().getImage(),"#1" , dr.getTopArtisteEcoutes().getNom(), "des écoutes"));
-            stats.add(new StatistiquePane(dr.getTopArtisteEcoutesCompletes().getImage(),"#1" , dr.getTopArtisteEcoutesCompletes().getNom(), "des écoutes complètes"));
-            stats.add(new StatistiquePane(dr.getTopArtisteSkips().getImage(),"#1" , dr.getTopArtisteSkips().getNom(), "des skips"));
-            stats.add(new StatistiquePane(dr.getTopAlbumEcoutes().getImage(),"#1" , dr.getTopAlbumEcoutes().getNom(), "des écoutes"));
-            stats.add(new StatistiquePane(dr.getTopAlbumEcoutesCompletes().getImage(),"#1" , dr.getTopAlbumEcoutesCompletes().getNom(), "des écoutes complètes"));
-            stats.add(new StatistiquePane(dr.getTopAlbumSkips().getImage(),"#1" , dr.getTopAlbumSkips().getNom(), "des skips"));
+            stats.add(new StatistiquePane(dr.getNbEcoutes()+"",language.getString("listenings")));
+            stats.add(new StatistiquePane(dr.getNbArtistes()+"",language.getString("artists").toLowerCase()));
+            stats.add(new StatistiquePane(dr.getNbMusiques()+"",language.getString("musics").toLowerCase()));
+            stats.add(new StatistiquePane(dr.getNbEcoutesCompletes()+"",language.getString("fullyListened").toLowerCase()));
+            stats.add(new StatistiquePane(dr.getNbSkips()+"",language.getString("skips").toLowerCase()));
+            stats.add(new StatistiquePane(dr.getPourcentEcoutesCompletes()+"",language.getString("%fullyListened")));
+            stats.add(new StatistiquePane(dr.getPourcentSkips(),language.getString("%skips")));
+            stats.add(new StatistiquePane(dr.getTopMusiqueEcoutes().getImage(),"#1" , dr.getTopMusiqueEcoutes().getNom(), language.getString("fromListenings")));
+            stats.add(new StatistiquePane(dr.getTopMusiqueEcoutesCompletes().getImage(),"#1" , dr.getTopMusiqueEcoutesCompletes().getNom(), language.getString("fromFullyListened")));
+            stats.add(new StatistiquePane(dr.getTopMusiqueSkips().getImage(),"#1" , dr.getTopMusiqueSkips().getNom(), language.getString("fromSkips")));
+            stats.add(new StatistiquePane(dr.getTopArtisteEcoutes().getImage(),"#1" , dr.getTopArtisteEcoutes().getNom(), language.getString("fromListenings")));
+            stats.add(new StatistiquePane(dr.getTopArtisteEcoutesCompletes().getImage(),"#1" , dr.getTopArtisteEcoutesCompletes().getNom(), language.getString("fromFullyListened")));
+            stats.add(new StatistiquePane(dr.getTopArtisteSkips().getImage(),"#1" , dr.getTopArtisteSkips().getNom(), language.getString("fromSkips")));
+            stats.add(new StatistiquePane(dr.getTopAlbumEcoutes().getImage(),"#1" , dr.getTopAlbumEcoutes().getNom(), language.getString("fromListenings")));
+            stats.add(new StatistiquePane(dr.getTopAlbumEcoutesCompletes().getImage(),"#1" , dr.getTopAlbumEcoutesCompletes().getNom(), language.getString("fromFullyListened")));
+            stats.add(new StatistiquePane(dr.getTopAlbumSkips().getImage(),"#1" , dr.getTopAlbumSkips().getNom(), language.getString("fromSkips")));
         }
     }
 }
