@@ -1,14 +1,22 @@
 package mystats.mystats;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
 import mystats.mystats.metier.DataReader;
 import mystats.mystats.metier.donnees.Album;
 import mystats.mystats.utils.ImgPane;
+import mystats.mystats.utils.Tailles;
 
 import java.util.ArrayList;
 
 public class VueAlbums  extends VuePrincipale {
+
     public VueAlbums(Frame f) {
         super(f);
+    }
+
+    @FXML private void initialize() {
+        classicFilters();
     }
 
     public void actualiser() {
@@ -34,5 +42,7 @@ public class VueAlbums  extends VuePrincipale {
         // Rajouter la dernière ligne (charger plus)
         if (nbAffiche >= 50)
             content.getChildren().add(new ImgPane());
+        content.setPrefSize(Tailles.WIDTH_LISTE, Tailles.HEIGHT_LISTE);
+        scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
     }
 }

@@ -17,9 +17,13 @@ import java.util.ResourceBundle;
 
 public abstract class VuePrincipale {
     @FXML protected GridPane gridFiltres;
-    @FXML private Label lblListened;
-    @FXML private Label lblSkipped;
-    @FXML private Label lblArtist;
+    @FXML protected Label lblListened;
+    @FXML protected Label lblSkipped;
+    @FXML protected Label lblArtist;
+    @FXML private Label lblMin;
+    @FXML private Label lblMax;
+    @FXML private Label lblFully;
+    @FXML private Label lblRatio;
     @FXML protected TextField ecMin;
     @FXML protected TextField ecMax;
     @FXML protected TextField coMin;
@@ -42,25 +46,27 @@ public abstract class VuePrincipale {
         this.frame = frame;
     }
 
-    @FXML private void initialize() {
+    protected void classicFilters() {
         ResourceBundle language = Langue.bundle;
-        lblListened.setText(language.getString("listened"));
-        lblSkipped.setText(language.getString("skipped"));
+        lblListened.setText(language.getString("listenings"));
+        lblSkipped.setText(language.getString("skips"));
         lblArtist.setText(language.getString("artist"));
+        lblMin.setText(language.getString("minimum"));
+        lblMax.setText(language.getString("maximum"));
+        lblFully.setText(language.getString("fullyListened"));
+        lblRatio.setText(language.getString("ratio"));
+        setupFilters();
+    }
 
+    protected void setupFilters() {
         gridFiltres.setAlignment(Pos.CENTER);
         for (Node n : gridFiltres.getChildren())
             if (n instanceof TextField) ((TextField)n).setPrefSize(50,20);
-
         GridPane.setColumnSpan(artName, 2);
-
-        scroll.fitToWidthProperty().set(true);
-        scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-
         content.setAlignment(Pos.CENTER);
-
         actualiser();
+        // content.setPrefSize(Tailles.WIDTH_LISTE,Tailles.HEIGHT_LISTE);
+        // scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
     }
 
     @FXML private void changeEcMin() {

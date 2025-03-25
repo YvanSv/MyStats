@@ -165,7 +165,7 @@ public class VueParametres {
         stats.setAlignment(Pos.CENTER);
 
         Label statistiques = new Label(language.getString("stats"));
-        Label nbEcoutes = new Label(f.getNbEcoutes() + " " + language.getString("listenings"));
+        Label nbEcoutes = new Label(f.getNbEcoutes() + " " + language.getString("listenings").toLowerCase());
         Label nbCompletes = new Label(f.getNbEcoutesCompletes() + " " + language.getString("fullyListened").toLowerCase());
         Label nbSkips = new Label(f.getNbEcoutesSkips() + " " + language.getString("skips").toLowerCase());
         Label nbMusiques = new Label(f.getNbMusiques() + " " + language.getString("musics").toLowerCase());

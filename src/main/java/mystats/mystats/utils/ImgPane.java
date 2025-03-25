@@ -314,7 +314,7 @@ public class ImgPane extends HBox {
             this.setOnClick(imgPane,Filtre.TYPE_MUSIQUE,art.getNom(),null,null,-1,frame);
 
             Label artName = new Label(art.getNom());
-            artName.getStyleClass().addAll("big-size",textColor);
+            artName.getStyleClass().addAll("medium-size",textColor);
             this.setOnClick(artName,Filtre.TYPE_MUSIQUE,art.getNom(),null,null,-1,frame);
             ResourceBundle language = Langue.bundle;
             Label tempsEcoute = new Label("\uD83D\uDD50 " + art.getTempsEcoute() + " " + language.getString("minutes"));

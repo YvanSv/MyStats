@@ -2,12 +2,16 @@ package mystats.mystats;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ScrollPane;
 import mystats.mystats.metier.DataReader;
 import mystats.mystats.metier.donnees.Ecoute;
 import mystats.mystats.utils.Filtre;
 import mystats.mystats.utils.ImgPane;
+import mystats.mystats.utils.Langue;
+import mystats.mystats.utils.Tailles;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class VueEcoutes extends VuePrincipale {
     @FXML private CheckBox cbEcoutees;
@@ -15,6 +19,14 @@ public class VueEcoutes extends VuePrincipale {
 
     public VueEcoutes(Frame f) {
         super(f);
+    }
+
+    @FXML private void initialize() {
+        ResourceBundle language = Langue.bundle;
+        lblListened.setText(language.getString("listened"));
+        lblSkipped.setText(language.getString("skipped"));
+        lblArtist.setText(language.getString("artist"));
+        setupFilters();
     }
 
     public void actualiser() {
@@ -36,6 +48,8 @@ public class VueEcoutes extends VuePrincipale {
         // Rajouter la dernière ligne (charger plus)
         if (nbAffiche >= 50)
             content.getChildren().add(new ImgPane());
+        content.setPrefSize(Tailles.WIDTH_LISTE, Tailles.HEIGHT_LISTE);
+        scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
     }
 
     @FXML private void nature() {

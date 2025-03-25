@@ -9,11 +9,11 @@
         <padding>
             <Insets top="20" bottom="20" left="20" right="20"/>
         </padding>
-        <Label fx:id="lblListened" text="Ecoutées" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="very-low-size,white"/>
+        <Label fx:id="lblListened" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="very-low-size,white"/>
         <CheckBox fx:id="cbEcoutees" onAction="#nature" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-        <Label fx:id="lblSkipped" text="Skippées" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="very-low-size,white"/>
+        <Label fx:id="lblSkipped" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="very-low-size,white"/>
         <CheckBox fx:id="cbSkippees" onAction="#nature" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-        <Label fx:id="lblArtist" text="Artiste" GridPane.columnIndex="0" GridPane.rowIndex="5" styleClass="very-low-size,white"/>
+        <Label fx:id="lblArtist" GridPane.columnIndex="0" GridPane.rowIndex="5" styleClass="very-low-size,white"/>
         <TextField fx:id="artName" GridPane.columnIndex="1" GridPane.rowIndex="5" onKeyReleased="#changeArtName"/>
     </GridPane>
     <BorderPane fx:id="vuePrincipale" styleClass="transparent">
