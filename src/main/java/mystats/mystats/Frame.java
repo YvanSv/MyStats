@@ -151,11 +151,13 @@ public class Frame {
             accueil.getStyleClass().add("accueil");
             frame.setCenter(accueil);
         }
+        ImgPane.resetTitres();
     }
 
     @FXML private void vueMusiques() {
         if (clear) Filtre.getInstance().clear();
         setSelected(musiques);
+        ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Frame.class.getResource("musiques-view.fxml"));
         loader.setControllerFactory(iC -> new VueMusiques(this));
@@ -166,6 +168,7 @@ public class Frame {
     @FXML private void vueArtistes() {
         if (clear) Filtre.getInstance().clear();
         setSelected(artistes);
+        ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Frame.class.getResource("artistes-view.fxml"));
         loader.setControllerFactory(iC -> new VueArtistes(this));
@@ -176,6 +179,7 @@ public class Frame {
     @FXML private void vueAlbums() {
         if (clear) Filtre.getInstance().clear();
         setSelected(albums);
+        ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Frame.class.getResource("albums-view.fxml"));
         loader.setControllerFactory(iC -> new VueAlbums(this));
@@ -186,6 +190,7 @@ public class Frame {
     @FXML private void vueHistorique() {
         if (clear) Filtre.getInstance().clear();
         setSelected(historique);
+        ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Frame.class.getResource("ecoutes-view.fxml"));
         loader.setControllerFactory(iC -> new VueEcoutes(this));
@@ -200,6 +205,7 @@ public class Frame {
     private void vueArbres() {
         if (clear) Filtre.getInstance().clear();
         setSelected(arbres);
+        ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Frame.class.getResource("arbres-view.fxml"));
         loader.setControllerFactory(iC -> new VueArbres(this));
@@ -209,6 +215,7 @@ public class Frame {
 
     private void vueParametres() {
         setSelected(parametres);
+        ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Frame.class.getResource("parametres-view.fxml"));
         loader.setControllerFactory(iC -> new VueParametres(this));

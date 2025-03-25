@@ -53,6 +53,7 @@ public class ImgPane extends HBox {
         titresMusiques = new ImgPane(0);
         titresArtistes = new ImgPane(1);
         titresEcoutes  = new ImgPane(2);
+        titresAlbums   = new ImgPane(3);
     }
 
     public static void setFrame(VuePrincipale v) {
