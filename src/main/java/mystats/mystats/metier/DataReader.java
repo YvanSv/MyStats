@@ -347,11 +347,9 @@ public class DataReader {
     }
 
     public void clear() {
-        fichiers.clear();
-        tmpHistorique.clear();
-        historique.clear();
-        selection.clear();
-        playlist.clear();
+        while (fichiers.size() > 0) {
+            removeFichier(fichiers.get(0));
+        }
         System.out.println("Suppression des fichiers terminée.");
     }
 

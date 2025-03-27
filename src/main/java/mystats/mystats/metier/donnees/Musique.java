@@ -69,6 +69,8 @@ public class Musique extends Donnee{
     }
 
     public double getRatio() {
+        if (lstEcoutes.size() == 0)
+            return 0;
         return (double)getNbEcoutesCompletes() / (double)(lstEcoutes.size()) * 100;
     }
 
