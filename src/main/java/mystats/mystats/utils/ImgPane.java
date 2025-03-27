@@ -317,8 +317,7 @@ public class ImgPane extends HBox {
             Label artName = new Label(art.getNom());
             artName.getStyleClass().addAll("medium-size",textColor);
             this.setOnClick(artName,Filtre.TYPE_MUSIQUE,art.getNom(),null,null,-1,frame);
-            ResourceBundle language = Langue.bundle;
-            Label tempsEcoute = new Label("\uD83D\uDD50 " + art.getTempsEcoute() + " " + language.getString("minutes"));
+            Label tempsEcoute = new Label("\uD83D\uDD50 " + getStringTempsEcoute(art.getTempsEcoute()));
             tempsEcoute.getStyleClass().addAll("low-size",getSecondaryTextColor(bgColor));
             VBox nomArtTemps = new VBox(artName,tempsEcoute);
             StackPane nom = new StackPane(nomArtTemps);
@@ -387,8 +386,7 @@ public class ImgPane extends HBox {
 
             Label musName = new Label(mus.getNom());
             Label artName = new Label(mus.getArtiste().getNom());
-            ResourceBundle language = Langue.bundle;
-            Label tempsEcoute = new Label("  \uD83D\uDD50 "+mus.getTempsEcoute() + " " + language.getString("minutes"));
+            Label tempsEcoute = new Label("  \uD83D\uDD50 "+getStringTempsEcoute(mus.getTempsEcoute()));
             musName.getStyleClass().addAll("medium-size",textColor);
             artName.getStyleClass().addAll("low-size",getSecondaryTextColor(bgColor));
             tempsEcoute.getStyleClass().addAll("very-low-size",getSecondaryTextColor(bgColor));
@@ -465,8 +463,7 @@ public class ImgPane extends HBox {
             Label artName = new Label(alb.getArtiste().getNom());
             artName.getStyleClass().addAll("low-size",getSecondaryTextColor(bgColor));
             this.setOnClick(artName,Filtre.TYPE_MUSIQUE,alb.getArtiste().getNom(),null,null,-1,frame);
-            ResourceBundle language = Langue.bundle;
-            Label tempsEcoute = new Label(" \uD83D\uDD50"+alb.getTempsEcoute() + " " + language.getString("minutes"));
+            Label tempsEcoute = new Label(" \uD83D\uDD50"+getStringTempsEcoute(alb.getTempsEcoute()));
             tempsEcoute.getStyleClass().addAll("very-low-size",getSecondaryTextColor(bgColor));
             HBox nom = new HBox(artName,tempsEcoute);
             VBox noms = new VBox(albName,nom);
@@ -614,15 +611,20 @@ public class ImgPane extends HBox {
     }
 
     private String getMainTextColor(Color bgColor) {
-        if (bgColor.getRed() > 0.9 && bgColor.getGreen() > 0.9 && bgColor.getBlue() > 0.9)
+        if (bgColor.getRed() > 0.88 && bgColor.getGreen() > 0.88 && bgColor.getBlue() > 0.88)
             return "black";
         else return "white";
     }
 
     private String getSecondaryTextColor(Color bgColor) {
-        if (bgColor.getRed  () > 0.43 && bgColor.getRed  () < 0.57 &&
-            bgColor.getGreen() > 0.43 && bgColor.getGreen() < 0.57 &&
-            bgColor.getBlue () > 0.43 && bgColor.getBlue () < 0.57)
+        double r = bgColor.getRed()   * 255;
+        double v = bgColor.getGreen() * 255;
+        double b = bgColor.getBlue()  * 255;
+        int threshold = 40;
+        if (r > 90 && r < 220 &&
+            v > 90 && v < 220 &&
+            b > 90 && b < 220 &&
+            Math.abs(r-v) < threshold && Math.abs(v-b) < threshold && Math.abs(b-r) < threshold)
             return "black";
         else return "gray";
     }
@@ -644,5 +646,14 @@ public class ImgPane extends HBox {
             if (texte.charAt(texte.length()-1) == '▼' || texte.charAt(texte.length()-1) == '▲')
                 l.setText(texte.substring(0,texte.length()-1));
         }
+    }
+
+    private String getStringTempsEcoute(int tempsEcoute) {
+        ResourceBundle language = Langue.bundle;
+        return tempsEcoute + " " + language.getString("minutes") + " (= " + toHours(tempsEcoute) + " " + language.getString("hours").toLowerCase() + ")";
+    }
+
+    private int toHours(int minutes) {
+        return minutes / 60;
     }
 }
