@@ -50,9 +50,9 @@ public class Frame {
         albums.setText(language.getString("albums"));
         historique.setText(language.getString("historic"));
         if (Langue.language.equals("English"))
-            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply((largeur / 4800) / (box_titre.getChildren().size() - 2)));
+            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply((largeur / 4374) / (box_titre.getChildren().size() - 2)));
         else if (Langue.language.equals("Français"))
-            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply((largeur / 4800) / (box_titre.getChildren().size() - 2)));
+            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply((largeur / 4983) / (box_titre.getChildren().size() - 2)));
         ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/img/logo-micro.png")));
         img.setFitHeight(Tailles.HEIGHT_LOGO);
         img.setPreserveRatio(true);
@@ -219,7 +219,7 @@ public class Frame {
     }
 
     private void vueGraphique() {
-        System.out.println("vueGraphique");
+        // System.out.println("vueGraphique");
     }
 
     private void vueArbres() {
@@ -253,7 +253,7 @@ public class Frame {
         if (selectedFiles != null)
             for (File file : selectedFiles)
                 dr.addFichier(new Fichier(file.getName(),file.getAbsolutePath()));
-        else System.out.println("Aucun fichier sélectionné");
+        // else System.out.println("Aucun fichier sélectionné");
         creerStats();
         accueil();
     }

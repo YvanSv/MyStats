@@ -21,8 +21,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         App.stage = stage;
-        Langue.english();
-        Langue.language = "English";
+        Langue.french();
+        Langue.language = "Français";
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("frame-view.fxml"));
         fxmlLoader.setControllerFactory(iC -> new Frame());
         root = fxmlLoader.load();

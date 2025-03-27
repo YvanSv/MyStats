@@ -66,9 +66,7 @@ public class SpotifyAuth {
                 // Calcul de l'heure d'expiration du token
                 expirationTime = System.currentTimeMillis() / 1000 + expiresIn;
                 return accessToken;
-            } else {
-                System.out.println("Erreur lors de la récupération du token d'accès");
-            }
+            } // else System.out.println("Erreur lors de la récupération du token d'accès");
         } catch (IOException e) {
             e.printStackTrace();
         }

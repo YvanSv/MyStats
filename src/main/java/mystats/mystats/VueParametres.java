@@ -126,7 +126,7 @@ public class VueParametres {
         if (selectedFiles != null)
             for (File file : selectedFiles)
                 DataReader.getInstance().addFichier(new Fichier(file.getName(),file.getAbsolutePath()));
-        else System.out.println("Aucun fichier sélectionné");
+        // else System.out.println("Aucun fichier sélectionné");
         frame.creerStats();
         actualiser();
     }
@@ -152,6 +152,7 @@ public class VueParametres {
 
         ResourceBundle language = Langue.bundle;
         lblParam.setText(language.getString("parameters"));
+        lblFiles.setText(language.getString("dataFiles"));
         btnLoad.setText(language.getString("importDatas"));
         btnDelete.setText(language.getString("deleteAllFiles"));
         lblLanguage.setText(language.getString("language"));
