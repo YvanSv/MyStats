@@ -21,7 +21,6 @@ public class Parametres {
     // totale d'une musique est une écoute full.
     public void setTauxPourEtreFull(float taux) {
         this.tauxPourEtreFull = taux;
-        System.out.println("taux pour full = " + taux);
     }
     public float getTauxPourEtreFull() {
         return tauxPourEtreFull;

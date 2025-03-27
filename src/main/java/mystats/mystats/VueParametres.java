@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 
 public class VueParametres {
     @FXML private Label lblParam;
+    @FXML private Label lblFiles;
     @FXML private VBox listeFichiers;
     @FXML private VBox content;
     @FXML private ScrollPane scroll;
@@ -55,7 +56,7 @@ public class VueParametres {
             hbox.getStyleClass().add("ligne-fichier");
 
             Label supprimer = new Label();
-            ImageView img = new ImageView(new Image(getClass().getResourceAsStream("img/moins2.png")));
+            ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/img/moins2.png")));
             img.setFitHeight(Tailles.HEIGHT_MINI_LOGO);
             img.setPreserveRatio(true);
             supprimer.setGraphic(img);
@@ -91,10 +92,11 @@ public class VueParametres {
     @FXML private void initialize() {
         ResourceBundle language = Langue.bundle;
         lblParam.setText(language.getString("parameters"));
+        lblFiles.setText(language.getString("dataFiles"));
         btnLoad.setText(language.getString("importDatas"));
         btnDelete.setText(language.getString("deleteAllFiles"));
-        charger.setImage(new Image(getClass().getResourceAsStream("img/plus2.png")));
-        supprimer.setImage(new Image(getClass().getResourceAsStream("img/moins2.png")));
+        charger.setImage(new Image(getClass().getResourceAsStream("/img/plus2.png")));
+        supprimer.setImage(new Image(getClass().getResourceAsStream("/img/moins2.png")));
         lblThreshold.setText(language.getString("thresholdSkipped"));
         valueSeuil.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("-?\\d*(\\.\\d*)?")) {
@@ -105,7 +107,7 @@ public class VueParametres {
         scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollFichiers.fitToWidthProperty().set(true);
         scrollFichiers.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-        valueSeuil.setText(Parametres.getInstance().getTauxPourEtreFull()+"");
+        valueSeuil.setText(Parametres.getInstance().getTauxPourEtreFullAvec()+"");
         lblLanguage.setText(language.getString("language"));
         Label en = new Label("English");
         Label fr = new Label("Français");
@@ -135,7 +137,7 @@ public class VueParametres {
     }
 
     @FXML private void changerSeuil() {
-        Parametres.getInstance().setTauxPourEtreFull(Float.parseFloat(valueSeuil.getText()));
+        Parametres.getInstance().setTauxPourEtreFullAvec(Float.parseFloat(valueSeuil.getText()));
         DataReader.getInstance().setNature(DataReader.getInstance().getHistorique());
     }
 
@@ -165,8 +167,7 @@ public class VueParametres {
         Label titre = new Label(f.getNom());
         titre.getStyleClass().addAll("low-size","white","center");
         Button quitter = new Button("X");
-        quitter.getStyleClass().add("fermer");
-        quitter.getStyleClass().add("clickable");
+        quitter.getStyleClass().addAll("clickable","fermer");
         HBox top = new HBox(vide,titre,quitter);
         top.getStyleClass().add("box-titre");
         top.spacingProperty().bind(App.stage.widthProperty().multiply(0.5/(double)(top.getChildren().size())));

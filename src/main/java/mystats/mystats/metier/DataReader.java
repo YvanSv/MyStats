@@ -59,7 +59,7 @@ public class DataReader {
         for (Ecoute ec : lst) {
             for (Musique musique : playlist) {
                 if (musique.getArtiste().getNom().equals(ec.getArtiste().getNom()) && musique.getNom().equals(ec.getNom())) {
-                    ec.setNature(!(ec.getDuree() < musique.getDuree() * Parametres.getInstance().getTauxPourEtreFull() / 100));
+                    ec.setNature(!(ec.getDuree() < musique.getDuree() * Parametres.getInstance().getTauxPourEtreFullAvec() / 100));
                     break;
                 }
             }

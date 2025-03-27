@@ -29,8 +29,8 @@ public class App extends Application {
         Scene scene = new Scene(root, 480, 480);
         scene.widthProperty().addListener((observable, oldValue, newValue) -> Tailles.setTailles(root.getWidth(),root.getHeight()));
         scene.heightProperty().addListener((observable, oldValue, newValue) -> Tailles.setTailles(root.getWidth(),root.getHeight()));
-        scene.getStylesheets().add(getClass().getResource("stylesheets/styles_main.css").toExternalForm());
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("img/logo-micro.png")));
+        scene.getStylesheets().add(getClass().getResource("/stylesheets/styles_main.css").toExternalForm());
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/logo-micro.png")));
         stage.setMaximized(true);
         stage.setTitle("MyStats");
         stage.setScene(scene);

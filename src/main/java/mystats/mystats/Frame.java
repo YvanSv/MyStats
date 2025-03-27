@@ -45,11 +45,11 @@ public class Frame {
             box_titre.spacingProperty().bind(App.stage.widthProperty().multiply(0.43 / (box_titre.getChildren().size() - 2)));
         else if (Langue.language.equals("Français"))
             box_titre.spacingProperty().bind(App.stage.widthProperty().multiply(0.4 / (box_titre.getChildren().size() - 2)));
-        ImageView img = new ImageView(new Image(getClass().getResourceAsStream("img/logo-micro.png")));
+        ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/img/logo-micro.png")));
         img.setFitHeight(Tailles.HEIGHT_LOGO);
         img.setPreserveRatio(true);
         logo.setGraphic(img);
-        img = new ImageView(new Image(getClass().getResourceAsStream("img/parametres.png")));
+        img = new ImageView(new Image(getClass().getResourceAsStream("/img/parametres.png")));
         img.setFitHeight(Tailles.HEIGHT_LOGO / 2);
         img.setPreserveRatio(true);
         titre.setAlignment(Pos.CENTER);

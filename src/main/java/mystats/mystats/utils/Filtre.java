@@ -30,20 +30,14 @@ public class Filtre {
     }
 
     public void clear() {
-        type = 0;
-        methodeTri = 0;
-        nbEcoutesCompletesMin = -1;
-        nbEcoutesCompletesMax = -1;
-        nbSkipMin = -1;
-        nbSkipMax = -1;
-        ratioMin = -1;
-        ratioMax = -1;
-        artiste = "";
-        musique = "";
-        album = "";
+        type = methodeTri = 0;
+        nbEcoutesMin = nbEcoutesMax = -1;
+        nbEcoutesCompletesMin = nbEcoutesCompletesMax = -1;
+        nbSkipMin = nbSkipMax = -1;
+        ratioMin = ratioMax = -1;
+        artiste = musique = album = "";
         nature = null;
-        dateDebut = null;
-        dateFin = null;
+        dateDebut = dateFin = null;
     }
 
     public void setType(int num) {
