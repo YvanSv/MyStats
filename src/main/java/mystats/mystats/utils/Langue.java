@@ -8,10 +8,12 @@ public class Langue {
     public static String language;
 
     public static void english() {
+        language = "English";
         loadLanguage(Locale.ENGLISH);
     }
 
     public static void french() {
+        language = "Français";
         loadLanguage(Locale.FRENCH);
     }
 

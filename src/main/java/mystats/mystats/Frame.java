@@ -49,8 +49,9 @@ public class Frame {
         artistes.setText(language.getString("artists"));
         albums.setText(language.getString("albums"));
         historique.setText(language.getString("historic"));
+        box_titre.spacingProperty().bind(App.stage.widthProperty().multiply(0));
         if (Langue.language.equals("English"))
-            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply((largeur / 4374) / (box_titre.getChildren().size() - 2)));
+            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply((largeur / 4600) / (box_titre.getChildren().size() - 2)));
         else if (Langue.language.equals("Français"))
             box_titre.spacingProperty().bind(App.stage.widthProperty().multiply((largeur / 4983) / (box_titre.getChildren().size() - 2)));
         ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/img/logo-micro.png")));
