@@ -3,6 +3,7 @@ package mystats.mystats;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -10,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import mystats.mystats.metier.DataReader;
 import mystats.mystats.utils.*;
 
@@ -36,15 +38,21 @@ public class Frame {
     private boolean clear = true;
 
     @FXML private void initialize() {
+        // Récupérer l'écran principal
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getBounds();
+        // Obtenir la largeur et la hauteur de l'écran
+        double largeur = bounds.getWidth();
+
         ResourceBundle language = Langue.bundle;
         musiques.setText(language.getString("musics"));
         artistes.setText(language.getString("artists"));
         albums.setText(language.getString("albums"));
         historique.setText(language.getString("historic"));
         if (Langue.language.equals("English"))
-            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply(0.43 / (box_titre.getChildren().size() - 2)));
+            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply((largeur / 4800) / (box_titre.getChildren().size() - 2)));
         else if (Langue.language.equals("Français"))
-            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply(0.4 / (box_titre.getChildren().size() - 2)));
+            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply((largeur / 4800) / (box_titre.getChildren().size() - 2)));
         ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/img/logo-micro.png")));
         img.setFitHeight(Tailles.HEIGHT_LOGO);
         img.setPreserveRatio(true);
