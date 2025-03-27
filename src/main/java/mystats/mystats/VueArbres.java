@@ -16,9 +16,15 @@ import mystats.mystats.utils.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class VueArbres extends VuePrincipale {
     @FXML private VBox accueil;
+    @FXML private Label lblGenerateWithDatas;
+    @FXML private Button btnMusics;
+    @FXML private Button btnAlbums;
+    @FXML private Button btnArtists;
+    @FXML private Button btnImportDatasToGenerate;
 
     public VueArbres(Frame f) {
         super(f);
@@ -26,6 +32,12 @@ public class VueArbres extends VuePrincipale {
 
     @FXML private void initialize() {
         accueil.setPrefSize(Tailles.WIDTH_SCREEN,Tailles.HEIGHT_SCROLL);
+        ResourceBundle language = Langue.bundle;
+        lblGenerateWithDatas.setText(language.getString("generateTreeWithDatas"));
+        btnMusics.setText(language.getString("musics"));
+        btnAlbums.setText(language.getString("albums"));
+        btnArtists.setText(language.getString("artists"));
+        btnImportDatasToGenerate.setText(language.getString("importDatasToGenerate"));
     }
 
     @Override public void actualiser() {
