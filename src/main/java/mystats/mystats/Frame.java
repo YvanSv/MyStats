@@ -41,7 +41,10 @@ public class Frame {
         artistes.setText(language.getString("artists"));
         albums.setText(language.getString("albums"));
         historique.setText(language.getString("historic"));
-        box_titre.spacingProperty().bind(App.stage.widthProperty().multiply(0.43 / (box_titre.getChildren().size() - 2)));
+        if (Langue.language.equals("English"))
+            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply(0.43 / (box_titre.getChildren().size() - 2)));
+        else if (Langue.language.equals("Français"))
+            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply(0.4 / (box_titre.getChildren().size() - 2)));
         ImageView img = new ImageView(new Image(getClass().getResourceAsStream("img/logo-micro.png")));
         img.setFitHeight(Tailles.HEIGHT_LOGO);
         img.setPreserveRatio(true);
@@ -69,6 +72,7 @@ public class Frame {
             hamburger.getItems().removeAll(graphiques,arbres,parametres);
             hamburger.getItems().addAll(graphiques,arbres,parametres);
         });
+        hamburger.getSelectionModel().select(defaultSelec);
 
         Label noFile = new Label(language.getString("noFileImported"));
         noFile.getStyleClass().addAll("medium-size","white","center");
@@ -102,6 +106,14 @@ public class Frame {
         //if (frame.getCenter() == graphiques) vueGraphique();
         ImgPane.resetTitres();
         clear = true;
+    }
+
+    public void changeLanguage() {
+        box_titre.getChildren().remove(hamburger);
+        hamburger.getItems().clear();
+        box_titre.getChildren().add(hamburger);
+        hamburger.getItems().clear();
+        initialize();
     }
 
     private void setSelected(Label l) {

@@ -43,10 +43,12 @@ public class VueEcoutes extends VuePrincipale {
         if (content.getChildren().size() == 0)
             content.getChildren().add(ImgPane.getTitresEcoutes());
         // Ajouter toutes les lignes
-        for (int i = printed; i < printed + nbAffiche; i++)
-            content.getChildren().add(new ImgPane(i+1,res.get(i),vueGraphique,frame));
+        for (int i = 0; i < nbAffiche; i++) {
+            if (printed + i >= res.size()) break;
+            content.getChildren().add(new ImgPane(i + printed + 1, res.get(i + printed), vueGraphique, this.frame));
+        }
         // Rajouter la dernière ligne (charger plus)
-        if (nbAffiche >= 50)
+        if (res.size() > printed + nbAffiche)
             content.getChildren().add(new ImgPane());
         content.setPrefSize(Tailles.WIDTH_LISTE, Tailles.HEIGHT_LISTE);
         scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);

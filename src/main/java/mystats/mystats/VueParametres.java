@@ -37,7 +37,7 @@ public class VueParametres {
     @FXML private Label lblThreshold;
     @FXML private TextField valueSeuil;
     @FXML private Label lblLanguage;
-    @FXML private ComboBox<String> langues;
+    @FXML private ComboBox<Label> langues;
     private final Frame frame;
 
     public VueParametres(Frame frame) {
@@ -101,12 +101,17 @@ public class VueParametres {
                 valueSeuil.setText(oldValue);
             }
         });
-        valueSeuil.setText(Parametres.getInstance().getTauxPourEtreFull()+"");
-        lblLanguage.setText(language.getString("language"));
         scroll.fitToWidthProperty().set(true);
         scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollFichiers.fitToWidthProperty().set(true);
         scrollFichiers.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        valueSeuil.setText(Parametres.getInstance().getTauxPourEtreFull()+"");
+        lblLanguage.setText(language.getString("language"));
+        Label en = new Label("English");
+        Label fr = new Label("Français");
+        en.getStyleClass().addAll("very-low-size","white","center","clickable");
+        fr.getStyleClass().addAll("very-low-size","white","center","clickable");
+        langues.getItems().addAll(en,fr);
         actualiser();
     }
 
@@ -135,11 +140,21 @@ public class VueParametres {
     }
 
     @FXML private void changeLanguage() {
-        String value = langues.getValue();
+        String value = langues.getValue().getText();
+        Langue.language = value;
         if (value.equals("Français"))
             Langue.french();
         else if (value.equals("English"))
             Langue.english();
+        frame.changeLanguage();
+
+        ResourceBundle language = Langue.bundle;
+        lblParam.setText(language.getString("parameters"));
+        btnLoad.setText(language.getString("importDatas"));
+        btnDelete.setText(language.getString("deleteAllFiles"));
+        lblLanguage.setText(language.getString("language"));
+        lblThreshold.setText(language.getString("thresholdSkipped"));
+        actualiser();
     }
 
     private void ajouterPopupClick(Label nom, Fichier f) {

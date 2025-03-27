@@ -22,6 +22,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         App.stage = stage;
         Langue.english();
+        Langue.language = "English";
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("frame-view.fxml"));
         fxmlLoader.setControllerFactory(iC -> new Frame());
         root = fxmlLoader.load();
