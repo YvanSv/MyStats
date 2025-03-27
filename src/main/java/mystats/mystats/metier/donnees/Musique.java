@@ -10,7 +10,7 @@ public class Musique extends Donnee{
     private final Artiste artiste;
     private int duree;
     private final String uri;
-    private int tempsEcoute = 0;
+    private long tempsEcoute;
 
     public Musique(String nom, Artiste artiste, Album album, String uri) {
         this.nom = nom;
@@ -25,6 +25,11 @@ public class Musique extends Donnee{
         tempsEcoute += e.getDuree();
     }
 
+    public void remove(Ecoute e) {
+        lstEcoutes.remove(e);
+        tempsEcoute -= e.getDuree();
+    }
+
     public String getNom() {
         return nom;
     }
@@ -35,6 +40,10 @@ public class Musique extends Donnee{
 
     public Artiste getArtiste() {
         return artiste;
+    }
+
+    public Musique getMusique(String nom) {
+        return this;
     }
 
     public Album getAlbum() {
@@ -72,7 +81,7 @@ public class Musique extends Donnee{
     }
 
     public int getTempsEcoute() {
-        return tempsEcoute / 1000 / 60;
+        return (int)(tempsEcoute / 60000);
     }
 
     public String toString() {

@@ -39,14 +39,19 @@ public class DataReader {
 
     public void removeFichier(Fichier f) {
         fichiers.remove(f);
-        historique.clear();
+
+        /*historique.clear();
         selection.clear();
         playlist.clear();
         tmpHistorique.clear();
         for (Fichier f2 : fichiers)
             lireFichier(f2);
         creerMusiques();
-        setNature(tmpHistorique);
+        setNature(tmpHistorique);*/
+        for (Ecoute e : f) {
+            historique.remove(e);
+            e.getMusique(e.getNom()).remove(e);
+        }
         System.out.println("Fichier " + f.getNom() + " supprimé.");
     }
 

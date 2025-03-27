@@ -56,6 +56,13 @@ public class Album extends Donnee {
         return artiste;
     }
 
+    public Musique getMusique(String nom) {
+        for (Musique m : lstMusiques)
+            if (m.getNom().equals(nom))
+                return m;
+        return null;
+    }
+
     @Override
     public String getNom() {
         return nom;

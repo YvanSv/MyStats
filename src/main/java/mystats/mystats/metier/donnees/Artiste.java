@@ -75,6 +75,13 @@ public class Artiste extends Donnee {
         return this;
     }
 
+    public Musique getMusique(String nom) {
+        for (Musique m : musiques)
+            if (m.getNom().equals(nom))
+                return m;
+        return null;
+    }
+
     public int getTempsEcoute() {
         int res = 0;
         for (Musique m : musiques)

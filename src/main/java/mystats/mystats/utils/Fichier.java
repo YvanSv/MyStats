@@ -3,8 +3,9 @@ package mystats.mystats.utils;
 import mystats.mystats.metier.donnees.Ecoute;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Fichier {
+public class Fichier implements Iterable<Ecoute> {
     private final String nom,lien;
     private final ArrayList<Ecoute> lstEcoutes = new ArrayList<>();
     private int nbMusiques = 0, nbArtistes = 0, nbAlbums = 0;
@@ -77,5 +78,9 @@ public class Fichier {
 
     public boolean equals(Fichier f) {
         return f.getNom().equals(nom) && f.getLien().equals(lien);
+    }
+
+    @Override public Iterator<Ecoute> iterator() {
+        return lstEcoutes.iterator();
     }
 }

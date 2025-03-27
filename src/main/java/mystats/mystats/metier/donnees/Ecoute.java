@@ -25,6 +25,10 @@ public class Ecoute extends Donnee {
         return artiste;
     }
 
+    public Musique getMusique(String nom) {
+        return artiste.getMusique(this.getNom());
+    }
+
     public Album getAlbum() {
         return album;
     }
@@ -90,7 +94,7 @@ public class Ecoute extends Donnee {
     }
 
     public int getTempsEcoute() {
-        return duree / 1000 / 60;
+        return duree / 60000;
     }
 
     public boolean deLaMusique(Musique musique) {
