@@ -11,6 +11,7 @@ public class SpotifyTrack {
 
     public static String getTrackImage(String trackId, String accessToken) {
         Request request = request(API_TRACK_URL,trackId,accessToken);
+        useRequest();
 
         try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful() && response.body() != null) {
@@ -20,20 +21,24 @@ public class SpotifyTrack {
                 return json.getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url");
             }
         } catch (IOException e) { e.printStackTrace(); }
+        try { Thread.sleep(300); } catch (Exception ignored) {}
         return null;
     }
 
     public static String getTrackArtist(String trackId, String accessToken) {
         Request request = request(API_TRACK_URL,trackId,accessToken);
+        useRequest();
 
         try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful() && response.body() != null) {
                 String responseBody = response.body().string();
                 JSONObject json = new JSONObject(responseBody);
                 // Accéder à l'ID de l'artiste
+                try { Thread.sleep(300); } catch (Exception ignored) {}
                 return json.getJSONArray("artists").getJSONObject(0).getString("id");
             }
         } catch (IOException e) { e.printStackTrace(); }
+        try { Thread.sleep(300); } catch (Exception ignored) {}
         return null;
     }
 
@@ -54,6 +59,19 @@ public class SpotifyTrack {
 
     private static Request request(String url, String id, String accessToken) {
         return new Request.Builder().url(url+id).addHeader("Authorization", "Bearer " + accessToken).build();
+    }
+
+    private static void useRequest() {
+        while (!SpotifyRequestWaiter.getInstance().reserveRequest()) {
+            try { Thread.sleep(15); } catch (Exception ignored) {}
+        }
+        Thread t = new Thread() {
+            @Override public void run() {
+                super.run();
+                SpotifyRequestWaiter.getInstance().askForRequest();
+            }
+        };
+        t.start();
     }
 
     // Fonction pour envoyer la requête à l'API Spotify
