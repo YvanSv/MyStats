@@ -3,7 +3,6 @@ package mystats.mystats;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -11,7 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
-import javafx.stage.Screen;
 import mystats.mystats.metier.DataReader;
 import mystats.mystats.utils.*;
 
@@ -22,9 +20,8 @@ import java.util.ResourceBundle;
 
 public class Frame {
     @FXML private BorderPane frame;
+    @FXML private HBox boxLogoTitre;
     @FXML private Label logo;
-    @FXML private HBox box_titre;
-    @FXML private Label titre;
     @FXML private Label musiques;
     @FXML private Label artistes;
     @FXML private Label albums;
@@ -38,30 +35,17 @@ public class Frame {
     private boolean clear = true;
 
     @FXML private void initialize() {
-        // Récupérer l'écran principal
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getBounds();
-        // Obtenir la largeur et la hauteur de l'écran
-        double largeur = bounds.getWidth();
-
         ResourceBundle language = Langue.bundle;
         musiques.setText(language.getString("musics"));
-        artistes.setText(language.getString("artists"));
         albums.setText(language.getString("albums"));
+        artistes.setText(language.getString("artists"));
         historique.setText(language.getString("historic"));
-        box_titre.spacingProperty().bind(App.stage.widthProperty().multiply(0));
-        if (Langue.language.equals("English"))
-            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply((largeur / 4600) / (box_titre.getChildren().size() - 2)));
-        else if (Langue.language.equals("Français"))
-            box_titre.spacingProperty().bind(App.stage.widthProperty().multiply((largeur / 4983) / (box_titre.getChildren().size() - 2)));
-        ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/img/logo-micro.png")));
-        img.setFitHeight(Tailles.HEIGHT_LOGO);
-        img.setPreserveRatio(true);
-        logo.setGraphic(img);
-        img = new ImageView(new Image(getClass().getResourceAsStream("/img/parametres.png")));
-        img.setFitHeight(Tailles.HEIGHT_LOGO / 2);
-        img.setPreserveRatio(true);
-        titre.setAlignment(Pos.CENTER);
+
+        boxLogoTitre.setAlignment(Pos.CENTER_LEFT);
+        musiques.setAlignment(Pos.CENTER);
+        albums.setAlignment(Pos.CENTER);
+        artistes.setAlignment(Pos.CENTER);
+        historique.setAlignment(Pos.CENTER);
 
         if (graphiques == null) {
             Label defaultSelec = new Label("≡");
@@ -98,6 +82,19 @@ public class Frame {
         infosDatas.setOnAction(e -> infos());
         infosDatas.getStyleClass().addAll("low-size","white","bouton","clickable");
         accueil.getChildren().addAll(noFile,importFile,infosDatas);
+    }
+
+    public void setTitlesSize() {
+        ImageView imgLogo = new ImageView(new Image(getClass().getResourceAsStream("/img/logo-micro.png")));
+        imgLogo.setFitHeight(Tailles.HEIGHT_LOGO * 2.25);
+        imgLogo.setPreserveRatio(true);
+        logo.setGraphic(imgLogo);
+        boxLogoTitre.setPrefWidth(Tailles.WIDTH_SCREEN * 0.2);
+        musiques.setPrefWidth(Tailles.WIDTH_SCREEN * 0.175);
+        albums.setPrefWidth(Tailles.WIDTH_SCREEN * 0.175);
+        artistes.setPrefWidth(Tailles.WIDTH_SCREEN * 0.175);
+        historique.setPrefWidth(Tailles.WIDTH_SCREEN * 0.175);
+        hamburger.setPrefWidth(Tailles.WIDTH_SCREEN * 0.1);
     }
 
     public void actualiser() {

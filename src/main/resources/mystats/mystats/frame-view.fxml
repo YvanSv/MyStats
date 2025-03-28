@@ -6,13 +6,13 @@
 <?import javafx.geometry.Insets?>
 <BorderPane fx:id="frame" styleClass="frame" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="mystats.mystats.Frame">
     <top>
-        <HBox fx:id="box_titre" styleClass="box-titre">
+        <HBox styleClass="box-titre">
             <padding>
                 <Insets top="30" bottom="30" left="20" right="20"/>
             </padding>
-            <HBox alignment="CENTER" onMouseClicked="#accueil" styleClass="clickable">
+            <HBox fx:id="boxLogoTitre" alignment="CENTER" onMouseClicked="#accueil" styleClass="clickable">
                 <Label fx:id="logo" styleClass="clickable"/>
-                <Label fx:id="titre" text="MyStats" styleClass="big-size,white,gras-900,center,clickable"/>
+                <Label text="MyStats" styleClass="big-size,white,gras-900,center,clickable"/>
             </HBox>
             <Label fx:id="musiques" text="Musiques" onMouseClicked="#vueMusiques" alignment="CENTER" styleClass="medium-size,white,gras-600,center,clickable"/>
             <Label fx:id="albums" text="Albums" onMouseClicked="#vueAlbums" styleClass="medium-size,white,gras-600,center,clickable"/>

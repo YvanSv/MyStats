@@ -184,6 +184,7 @@
 
 .combo-box .list-cell:filled:selected .text {
     -fx-fill: white;
+    -fx-text-alignment: right;
 }
 
 /* ARBRES */

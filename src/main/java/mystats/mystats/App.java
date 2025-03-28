@@ -11,6 +11,7 @@ import mystats.mystats.utils.Langue;
 import mystats.mystats.utils.Tailles;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class App extends Application {
     // public static final String CLIENT_ID = "074ca6ac424b4475aa544a69cb0f8e3e";
@@ -23,11 +24,19 @@ public class App extends Application {
         App.stage = stage;
         Langue.english();
         Langue.language = "English";
+        AtomicReference<Frame> far = new AtomicReference<>();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("frame-view.fxml"));
-        fxmlLoader.setControllerFactory(iC -> new Frame());
+        fxmlLoader.setControllerFactory(iC -> {
+            Frame f = new Frame();
+            far.set(f);
+            return f;
+        });
         root = fxmlLoader.load();
         Scene scene = new Scene(root, 480, 480);
-        scene.widthProperty().addListener((observable, oldValue, newValue) -> Tailles.setTailles(root.getWidth(),root.getHeight()));
+        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+            Tailles.setTailles(root.getWidth(),root.getHeight());
+            far.get().setTitlesSize();
+        });
         scene.heightProperty().addListener((observable, oldValue, newValue) -> Tailles.setTailles(root.getWidth(),root.getHeight()));
         scene.getStylesheets().add(getClass().getResource("/stylesheets/styles_main.css").toExternalForm());
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/logo-micro.png")));
