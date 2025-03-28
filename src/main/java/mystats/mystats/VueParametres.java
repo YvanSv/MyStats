@@ -138,7 +138,7 @@ public class VueParametres {
 
             langues.getSelectionModel().select(value);
             langues.getItems().remove(tmp);
-            value.getStyleClass().add("selected");
+            // value.getStyleClass().add("selected");
             changedLanguage = false;
 
             frame.changeLanguage();

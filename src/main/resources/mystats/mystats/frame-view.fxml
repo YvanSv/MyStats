@@ -14,10 +14,10 @@
                 <Label fx:id="logo" styleClass="clickable"/>
                 <Label text="MyStats" styleClass="big-size,white,gras-900,center,clickable"/>
             </HBox>
-            <Label fx:id="musiques" text="Musiques" onMouseClicked="#vueMusiques" alignment="CENTER" styleClass="medium-size,white,gras-600,center,clickable"/>
-            <Label fx:id="albums" text="Albums" onMouseClicked="#vueAlbums" styleClass="medium-size,white,gras-600,center,clickable"/>
-            <Label fx:id="artistes" text="Artistes" onMouseClicked="#vueArtistes" styleClass="medium-size,white,gras-600,center,clickable"/>
-            <Label fx:id="historique" text="Historique" onMouseClicked="#vueHistorique" styleClass="medium-size,white,gras-600,center,clickable"/>
+            <StackPane fx:id="musiques" styleClass="center"><Label fx:id="lblMusics" onMouseClicked="#vueMusiques" alignment="CENTER" styleClass="medium-size,white,gras-600,center,clickable"/></StackPane>
+            <StackPane fx:id="albums" styleClass="center"><Label fx:id="lblAlbums" onMouseClicked="#vueAlbums" styleClass="medium-size,white,gras-600,center,clickable"/></StackPane>
+            <StackPane fx:id="artistes" styleClass="center"><Label fx:id="lblArtists" onMouseClicked="#vueArtistes" styleClass="medium-size,white,gras-600,center,clickable"/></StackPane>
+            <StackPane fx:id="historique" styleClass="center"><Label fx:id="lblHistoric" onMouseClicked="#vueHistorique" styleClass="medium-size,white,gras-600,center,clickable"/></StackPane>
             <ComboBox fx:id="hamburger" promptText="≡" styleClass="transparent,medium-size,gras-600,center,clickable"/>
         </HBox>
     </top>

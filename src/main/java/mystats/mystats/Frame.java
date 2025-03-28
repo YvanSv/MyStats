@@ -22,10 +22,14 @@ public class Frame {
     @FXML private BorderPane frame;
     @FXML private HBox boxLogoTitre;
     @FXML private Label logo;
-    @FXML private Label musiques;
-    @FXML private Label artistes;
-    @FXML private Label albums;
-    @FXML private Label historique;
+    @FXML private StackPane musiques;
+    @FXML private StackPane artistes;
+    @FXML private StackPane albums;
+    @FXML private StackPane historique;
+    @FXML private Label lblMusics;
+    @FXML private Label lblArtists;
+    @FXML private Label lblAlbums;
+    @FXML private Label lblHistoric;
     private Label graphiques;
     private Label arbres;
     private Label parametres;
@@ -36,10 +40,10 @@ public class Frame {
 
     @FXML private void initialize() {
         ResourceBundle language = Langue.bundle;
-        musiques.setText(language.getString("musics"));
-        albums.setText(language.getString("albums"));
-        artistes.setText(language.getString("artists"));
-        historique.setText(language.getString("historic"));
+        lblMusics.setText(language.getString("musics"));
+        lblAlbums.setText(language.getString("albums"));
+        lblArtists.setText(language.getString("artists"));
+        lblHistoric.setText(language.getString("historic"));
 
         boxLogoTitre.setAlignment(Pos.CENTER_LEFT);
         musiques.setAlignment(Pos.CENTER);
@@ -102,16 +106,16 @@ public class Frame {
         int type = Filtre.getInstance().getType();
         if (type == 0) {
             vueMusiques();
-            setSelected(musiques);
+            setSelected(lblMusics);
         } else if (type == 1) {
             vueArtistes();
-            setSelected(artistes);
+            setSelected(lblArtists);
         } else if (type == 2) {
             vueHistorique();
-            setSelected(historique);
+            setSelected(lblHistoric);
         } else if (type == 3) {
             vueAlbums();
-            setSelected(albums);
+            setSelected(lblAlbums);
         }
         //if (frame.getCenter() == graphiques) vueGraphique();
         ImgPane.resetTitres();
@@ -174,7 +178,7 @@ public class Frame {
 
     @FXML private void vueMusiques() {
         if (clear) Filtre.getInstance().clear();
-        setSelected(musiques);
+        setSelected(lblMusics);
         ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Frame.class.getResource("musiques-view.fxml"));
@@ -185,7 +189,7 @@ public class Frame {
 
     @FXML private void vueArtistes() {
         if (clear) Filtre.getInstance().clear();
-        setSelected(artistes);
+        setSelected(lblArtists);
         ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Frame.class.getResource("artistes-view.fxml"));
@@ -196,7 +200,7 @@ public class Frame {
 
     @FXML private void vueAlbums() {
         if (clear) Filtre.getInstance().clear();
-        setSelected(albums);
+        setSelected(lblAlbums);
         ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Frame.class.getResource("albums-view.fxml"));
@@ -207,7 +211,7 @@ public class Frame {
 
     @FXML private void vueHistorique() {
         if (clear) Filtre.getInstance().clear();
-        setSelected(historique);
+        setSelected(lblHistoric);
         ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Frame.class.getResource("ecoutes-view.fxml"));
