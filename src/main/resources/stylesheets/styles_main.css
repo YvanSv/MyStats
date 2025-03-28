@@ -182,6 +182,10 @@
     -fx-text-alignment: right;
 }
 
+.combo-box .list-cell:filled:selected .text {
+    -fx-fill: white;
+}
+
 /* ARBRES */
 
 

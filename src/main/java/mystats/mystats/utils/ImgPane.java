@@ -553,8 +553,8 @@ public class ImgPane extends HBox {
             if (rating < 0.6) return "red";
             else if (rating > 0.8) return "green";
         } else if (d instanceof Artiste || d instanceof Album) {
-            if (rating < 1.05) return "red";
-            else if (rating > 1.55) return "green";
+            if (rating < 1.15) return "red";
+            else if (rating > 1.65) return "green";
         } return "gray";
     }
 

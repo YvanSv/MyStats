@@ -71,7 +71,6 @@ public class Frame {
         graphiques.getStyleClass().addAll("low-size","white","center","clickable");
         arbres.getStyleClass().addAll("low-size","white","center","clickable");
         parametres.getStyleClass().addAll("low-size","white","center","clickable");
-        hamburger.getStyleClass().addAll("transparent");
         hamburger.getItems().addAll(defaultSelec,graphiques,arbres,parametres);
         hamburger.setOnAction(e -> {
             if (hamburger.getValue() == graphiques) vueGraphique();
@@ -81,7 +80,6 @@ public class Frame {
             hamburger.getItems().removeAll(graphiques,arbres,parametres);
             hamburger.getItems().addAll(graphiques,arbres,parametres);
         });
-        hamburger.getSelectionModel().select(defaultSelec);
 
         Label noFile = new Label(language.getString("noFileImported"));
         noFile.getStyleClass().addAll("medium-size","white","center");
