@@ -19,9 +19,7 @@ import mystats.mystats.metier.DataReader;
 import mystats.mystats.utils.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -190,7 +188,7 @@ public class Frame {
         ImgPane.resetTitres();
     }
 
-    private void popupInfos() throws URISyntaxException, IOException {
+    private void popupInfos() {
         Popup popup = new Popup();
         BorderPane root = new BorderPane();
         ResourceBundle language = Langue.bundle;
