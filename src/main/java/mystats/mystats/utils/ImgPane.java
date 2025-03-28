@@ -386,38 +386,6 @@ public class ImgPane extends HBox {
             VBox noms = new VBox(albName,nom);
             noms.setPrefWidth(0.38*Tailles.WIDTH_LISTE);
             noms.setAlignment(Pos.CENTER_LEFT);
-
-            /*Label ecoutes = new Label(alb.getNbEcoutesCompletes()+"");
-            Label slash   = new Label("/");
-            Label skips   = new Label(alb.getNbSkips()+"");
-            ecoutes.setPrefWidth(0.06*Tailles.WIDTH_LISTE);
-            slash  .setPrefWidth(0.01*Tailles.WIDTH_LISTE);
-            skips  .setPrefWidth(0.06*Tailles.WIDTH_LISTE);
-            ecoutes.setAlignment(Pos.CENTER_RIGHT);
-            slash.setAlignment(Pos.CENTER);
-            skips.setAlignment(Pos.CENTER_LEFT);
-            setOnClick(ecoutes,Filtre.TYPE_ECOUTE,alb.getArtiste().getNom(),null,alb.getNom(),1,frame);
-            setOnClick(skips,Filtre.TYPE_ECOUTE,alb.getArtiste().getNom(),null,alb.getNom(),0,frame);
-            ecoutes.getStyleClass().addAll("medium-size",textColor);
-            slash.getStyleClass().addAll("medium-size",textColor);
-            skips.getStyleClass().addAll("medium-size",textColor);
-
-            Label total = new Label(alb.getNbEcoutes()+"");
-            Label ratio = new Label(String.format("(%2.2f",alb.getRatio())+"%)");
-            Label rating = new Label(String.format("%1.2f",alb.getRating()));
-            total.setPrefWidth(0.05*Tailles.WIDTH_LISTE);
-            ratio.setPrefWidth(0.1*Tailles.WIDTH_LISTE);
-            rating.setPrefWidth(0.07*Tailles.WIDTH_LISTE);
-            total.setAlignment(Pos.CENTER);
-            rating.setAlignment(Pos.CENTER);
-            total.getStyleClass().addAll("medium-size",textColor);
-            ratio.getStyleClass().addAll("medium-size",textColor);
-            rating.getStyleClass().addAll("medium-size",textColor);
-            setOnClick(total,Filtre.TYPE_ECOUTE,alb.getArtiste().getNom(),null,alb.getNom(),-1,frame);
-
-            HBox stats = new HBox(ecoutes,slash,skips,total,ratio,rating);
-            stats.setSpacing(0.02*Tailles.WIDTH_LISTE);
-            stats.setAlignment(Pos.CENTER_RIGHT);*/
             getChildren().addAll(indexPane,imgPane,noms,getStats(alb,frame,textColor));
         }
     }
@@ -485,31 +453,6 @@ public class ImgPane extends HBox {
             getChildren().addAll(indexPane,imgPane,noms,stats);
         }
     }
-
-    // ARTISTES
-    /*private void setOnClick(Label l,int type, String nomArtiste, int nature) {
-        Filtre f = Filtre.getInstance();
-        l.setOnMouseClicked( e -> {
-            f.clear();
-            f.setType(type);
-            f.setArtiste(nomArtiste);
-            f.setNature(nature == -1 ? null : nature == 1);
-            frame.actualiser();
-        });
-    }
-
-    // MUSIQUES
-    /*private void setOnClick(Label l, int type, String nomArtiste, String nomMusique, int nature) {
-        Filtre f = Filtre.getInstance();
-        l.setOnMouseClicked( e -> {
-            f.clear();
-            f.setType(type);
-            f.setArtiste(nomArtiste);
-            f.setMusique(nomMusique);
-            f.setNature(nature == -1 ? null : nature == 1);
-            frame.actualiser();
-        });
-    }*/
 
     private HBox getStats(Donnee d, Frame frame, String textColor) {
         Label ecoutes = new Label(d.getNbEcoutesCompletes()+"");
