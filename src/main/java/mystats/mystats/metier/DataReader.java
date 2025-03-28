@@ -180,6 +180,7 @@ public class DataReader {
             case 5 -> res.sort(new TriEcoutes());
             case 6 -> res.sort(new TriEcoutesCompletes());
             case 8 -> res.sort(new TriTempsEcoute());
+            case 9 -> res.sort(new TriRating());
         }
         return res;
     }
@@ -197,6 +198,7 @@ public class DataReader {
             case 5 -> res.sort(new TriEcoutes());
             case 6 -> res.sort(new TriEcoutesCompletes());
             case 8 -> res.sort(new TriTempsEcoute());
+            case 9 -> res.sort(new TriRating());
         }
         return res;
     }
@@ -209,6 +211,7 @@ public class DataReader {
         switch (Math.abs(Filtre.getInstance().getMethodeTri())) {
             case 3 -> res.sort(new TriNomArtiste());
             case 4 -> res.sort(new TriNomMusique());
+            case 9 -> res.sort(new TriRating());
         }
         return res;
     }
@@ -226,6 +229,7 @@ public class DataReader {
             case 6 -> res.sort(new TriEcoutesCompletes());
             case 7 -> res.sort(new TriNomAlbum());
             case 8 -> res.sort(new TriTempsEcoute());
+            case 9 -> res.sort(new TriRating());
         }
         return res;
     }

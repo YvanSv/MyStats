@@ -4,7 +4,6 @@ import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 
 public class Musique extends Donnee{
-    private final String nom;
     private final ArrayList<Ecoute> lstEcoutes = new ArrayList<>();
     private final Album album;
     private final Artiste artiste;
@@ -28,10 +27,6 @@ public class Musique extends Donnee{
     public void remove(Ecoute e) {
         lstEcoutes.remove(e);
         tempsEcoute -= e.getDuree();
-    }
-
-    public String getNom() {
-        return nom;
     }
 
     public int getDuree() {
@@ -68,12 +63,6 @@ public class Musique extends Donnee{
         return cpt;
     }
 
-    public double getRatio() {
-        if (lstEcoutes.size() == 0)
-            return 0;
-        return (double)getNbEcoutesCompletes() / (double)(lstEcoutes.size()) * 100;
-    }
-
     public ImageView getImage() {
         return album.getImage();
     }
@@ -84,6 +73,11 @@ public class Musique extends Donnee{
 
     public int getTempsEcoute() {
         return (int)(tempsEcoute / 60000);
+    }
+
+    @Override public float getRating() {
+        if (getDuree() == 0) return 0;
+        return (float) (getRatio() / 100.0 * getTempsEcoute() / getNbEcoutes() / (getDuree() / 60000.0));
     }
 
     public String toString() {

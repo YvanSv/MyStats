@@ -9,7 +9,6 @@ import mystats.mystats.utils.SpotifyTrack;
 import java.util.ArrayList;
 
 public class Album extends Donnee {
-    private final String nom;
     private final Artiste artiste;
     private final ArrayList<Musique> lstMusiques = new ArrayList<>();
 
@@ -47,11 +46,6 @@ public class Album extends Donnee {
     }
 
     @Override
-    public double getRatio() {
-        return (double)getNbEcoutesCompletes() / (double)getNbEcoutes() * 100;
-    }
-
-    @Override
     public Artiste getArtiste() {
         return artiste;
     }
@@ -63,25 +57,22 @@ public class Album extends Donnee {
         return null;
     }
 
-    @Override
-    public String getNom() {
-        return nom;
-    }
-
     public ImageView getImage() {
         if (img == null) {
             this.img = new ImageView();
             String accessToken = SpotifyAuth.getValidAccessToken();
             if (accessToken != null) {
-                String trackId = SpotifyID.parseID(lstMusiques.get(0).getURI());
-                String imageUrl = SpotifyTrack.getTrackImage(trackId, accessToken);
+                if (lstMusiques.size() != 0) {
+                    String trackId = SpotifyID.parseID(lstMusiques.get(0).getURI());
+                    String imageUrl = SpotifyTrack.getTrackImage(trackId, accessToken);
 
-                if (imageUrl != null) {
-                    Image image = new Image(imageUrl);
-                    img = new ImageView(image);
-                    img.setFitWidth(300);
-                    img.setPreserveRatio(true);
-                }//  else System.out.println("Impossible de récupérer l'image du morceau.");
+                    if (imageUrl != null) {
+                        Image image = new Image(imageUrl);
+                        img = new ImageView(image);
+                        img.setFitWidth(300);
+                        img.setPreserveRatio(true);
+                    }//  else System.out.println("Impossible de récupérer l'image du morceau.");
+                }
             } // else System.out.println("Impossible d'obtenir un token d'accès.");
         }
         return img;

@@ -56,8 +56,16 @@
     -fx-text-fill: gray;
 }
 
+.red {
+    -fx-text-fill: red;
+}
+
 .black {
     -fx-text-fill: black;
+}
+
+.green {
+    -fx-text-fill: #1ed760;
 }
 
 .clickable:hover {

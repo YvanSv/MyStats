@@ -139,6 +139,7 @@ public class VueParametres {
     @FXML private void changerSeuil() {
         Parametres.getInstance().setTauxPourEtreFullAvec(Float.parseFloat(valueSeuil.getText()));
         DataReader.getInstance().setNature(DataReader.getInstance().getHistorique());
+        frame.creerStats();
     }
 
     @FXML private void changeLanguage() {

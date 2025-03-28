@@ -4,17 +4,12 @@ import javafx.scene.image.ImageView;
 import mystats.mystats.utils.Date;
 
 public class Ecoute extends Donnee {
-    private String nom;
     private Artiste artiste;
     private Album album;
     private Date date;
     private int duree;
     private boolean complete;
     private String uri;
-
-    public String getNom() {
-        return nom;
-    }
 
     @Override
     public ImageView getImage() {
@@ -57,8 +52,12 @@ public class Ecoute extends Donnee {
         return complete ? 0 : 1;
     }
 
-    public double getRatio() {
+    @Override public double getRatio() {
         return complete ? 100 : 0;
+    }
+    @Override public float getRating() {
+        if (getMusique(this.nom).getDuree() == 0) return 0;
+        return (float)getDuree() / getMusique(this.nom).getDuree();
     }
 
     public String getUri() {

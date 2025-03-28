@@ -9,15 +9,10 @@ import mystats.mystats.utils.SpotifyTrack;
 import java.util.ArrayList;
 
 public class Artiste extends Donnee {
-    private final String nom;
     private final ArrayList<Musique> musiques = new ArrayList<>();
 
     public Artiste(String nom) {
         this.nom = nom;
-    }
-
-    public String getNom() {
-        return nom;
     }
 
     @Override
@@ -64,11 +59,6 @@ public class Artiste extends Donnee {
         for (Musique m : musiques)
             res += m.getNbSkips();
         return res;
-    }
-
-    public double getRatio() {
-        if (getNbEcoutes() == 0) return 0;
-        return (double)getNbEcoutesCompletes() / (double)(getNbEcoutes()) * 100;
     }
 
     public Artiste getArtiste() {
