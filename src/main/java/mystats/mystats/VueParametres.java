@@ -40,6 +40,7 @@ public class VueParametres {
     @FXML private Label lblLanguage;
     @FXML private ComboBox<Label> langues;
     private final Frame frame;
+    private boolean changedLanguage = false;
 
     public VueParametres(Frame frame) {
         this.frame = frame;
@@ -77,12 +78,18 @@ public class VueParametres {
             listeFichiers.getChildren().add(hbox);
         }
 
+        ResourceBundle language = Langue.bundle;
         if (DataReader.getInstance().getFichiers().size() == 0) {
-            ResourceBundle language = Langue.bundle;
             Label aucun = new Label(language.getString("noFileLoaded"));
             aucun.getStyleClass().addAll("texte-titre","white","low-size");
             listeFichiers.getChildren().add(aucun);
         }
+        lblParam.setText(language.getString("parameters"));
+        lblFiles.setText(language.getString("dataFiles"));
+        btnLoad.setText(language.getString("importDatas"));
+        btnDelete.setText(language.getString("deleteAllFiles"));
+        lblLanguage.setText(language.getString("language"));
+        lblThreshold.setText(language.getString("thresholdSkipped"));
     }
 
     private void resetListe() {
@@ -114,6 +121,29 @@ public class VueParametres {
         en.getStyleClass().addAll("very-low-size","white","center","clickable");
         fr.getStyleClass().addAll("very-low-size","white","center","clickable");
         langues.getItems().addAll(en,fr);
+        langues.setPromptText(Langue.language);
+        langues.setOnAction(e -> {
+            if (changedLanguage) return;
+            changedLanguage = true;
+            Label value = langues.getValue();
+            Langue.language = value.getText();
+            Label tmp = new Label();
+            langues.getItems().add(tmp);
+            langues.getSelectionModel().select(tmp);
+            langues.getItems().removeAll(en,fr);
+            langues.getItems().addAll(en,fr);
+
+            if (value == fr) Langue.french();
+            else if (value == en) Langue.english();
+
+            langues.getSelectionModel().select(value);
+            langues.getItems().remove(tmp);
+            value.getStyleClass().add("selected");
+            changedLanguage = false;
+
+            frame.changeLanguage();
+            actualiser();
+        });
         actualiser();
     }
 
@@ -140,25 +170,6 @@ public class VueParametres {
         Parametres.getInstance().setTauxPourEtreFullAvec(Float.parseFloat(valueSeuil.getText()));
         DataReader.getInstance().setNature(DataReader.getInstance().getHistorique());
         frame.creerStats();
-    }
-
-    @FXML private void changeLanguage() {
-        String value = langues.getValue().getText();
-        Langue.language = value;
-        if (value.equals("Français"))
-            Langue.french();
-        else if (value.equals("English"))
-            Langue.english();
-        frame.changeLanguage();
-
-        ResourceBundle language = Langue.bundle;
-        lblParam.setText(language.getString("parameters"));
-        lblFiles.setText(language.getString("dataFiles"));
-        btnLoad.setText(language.getString("importDatas"));
-        btnDelete.setText(language.getString("deleteAllFiles"));
-        lblLanguage.setText(language.getString("language"));
-        lblThreshold.setText(language.getString("thresholdSkipped"));
-        actualiser();
     }
 
     private void ajouterPopupClick(Label nom, Fichier f) {

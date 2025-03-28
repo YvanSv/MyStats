@@ -64,7 +64,7 @@
             </Line>
             <HBox styleClass="ligne-param">
                 <Label fx:id="lblLanguage" styleClass="very-low-size,white"/>
-                <ComboBox fx:id="langues" onAction="#changeLanguage"/>
+                <ComboBox fx:id="langues" styleClass="transparent,very-low-size,gras-600,center,clickable"/>
             </HBox>
         </VBox>
     </ScrollPane>

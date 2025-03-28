@@ -63,15 +63,21 @@ public class Frame {
         img.setPreserveRatio(true);
         titre.setAlignment(Pos.CENTER);
 
-        Label defaultSelec = new Label("≡");
-        graphiques = new Label(language.getString("charts"));
-        arbres = new Label(language.getString("trees"));
-        parametres = new Label(language.getString("parameters"));
-        defaultSelec.getStyleClass().addAll("medium-size","white","center","clickable");
-        graphiques.getStyleClass().addAll("low-size","white","center","clickable");
-        arbres.getStyleClass().addAll("low-size","white","center","clickable");
-        parametres.getStyleClass().addAll("low-size","white","center","clickable");
-        hamburger.getItems().addAll(defaultSelec,graphiques,arbres,parametres);
+        if (graphiques == null) {
+            Label defaultSelec = new Label("≡");
+            graphiques = new Label(language.getString("charts"));
+            arbres = new Label(language.getString("trees"));
+            parametres = new Label(language.getString("parameters"));
+            defaultSelec.getStyleClass().addAll("medium-size", "white", "center", "clickable");
+            graphiques.getStyleClass().addAll("low-size", "white", "center", "clickable");
+            arbres.getStyleClass().addAll("low-size", "white", "center", "clickable");
+            parametres.getStyleClass().addAll("low-size", "white", "center", "clickable");
+            hamburger.getItems().addAll(defaultSelec,graphiques,arbres,parametres);
+        } else {
+            graphiques.setText(language.getString("charts"));
+            arbres.setText(language.getString("trees"));
+            parametres.setText(language.getString("parameters"));
+        }
         hamburger.setOnAction(e -> {
             if (hamburger.getValue() == graphiques) vueGraphique();
             else if (hamburger.getValue() == arbres) vueArbres();
@@ -116,10 +122,6 @@ public class Frame {
     }
 
     public void changeLanguage() {
-        box_titre.getChildren().remove(hamburger);
-        hamburger.getItems().clear();
-        box_titre.getChildren().add(hamburger);
-        hamburger.getItems().clear();
         initialize();
     }
 
