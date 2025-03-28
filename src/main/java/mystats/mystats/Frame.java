@@ -127,10 +127,10 @@ public class Frame {
     }
 
     private void setSelected(Label l) {
-        musiques.getStyleClass().remove("selected");
-        artistes.getStyleClass().remove("selected");
-        albums.getStyleClass().remove("selected");
-        historique.getStyleClass().remove("selected");
+        lblMusics.getStyleClass().remove("selected");
+        lblArtists.getStyleClass().remove("selected");
+        lblAlbums.getStyleClass().remove("selected");
+        lblHistoric.getStyleClass().remove("selected");
         graphiques.getStyleClass().remove("selected");
         arbres.getStyleClass().remove("selected");
         parametres.getStyleClass().remove("selected");

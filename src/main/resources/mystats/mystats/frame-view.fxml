@@ -10,9 +10,9 @@
             <padding>
                 <Insets top="30" bottom="30" left="20" right="20"/>
             </padding>
-            <HBox fx:id="boxLogoTitre" alignment="CENTER" onMouseClicked="#accueil" styleClass="clickable">
-                <Label fx:id="logo" styleClass="clickable"/>
-                <Label text="MyStats" styleClass="big-size,white,gras-900,center,clickable"/>
+            <HBox fx:id="boxLogoTitre" alignment="CENTER">
+                <Label fx:id="logo" onMouseClicked="#accueil" styleClass="clickable"/>
+                <Label text="MyStats" onMouseClicked="#accueil" styleClass="big-size,white,gras-900,center,clickable"/>
             </HBox>
             <StackPane fx:id="musiques" styleClass="center"><Label fx:id="lblMusics" onMouseClicked="#vueMusiques" alignment="CENTER" styleClass="medium-size,white,gras-600,center,clickable"/></StackPane>
             <StackPane fx:id="albums" styleClass="center"><Label fx:id="lblAlbums" onMouseClicked="#vueAlbums" styleClass="medium-size,white,gras-600,center,clickable"/></StackPane>
