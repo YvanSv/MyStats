@@ -75,11 +75,6 @@ public class Musique extends Donnee{
         return (int)(tempsEcoute / 60000);
     }
 
-    @Override public float getRating() {
-        if (getDuree() == 0) return 0;
-        return (int)((getRatio() / 100.0 * getTempsEcoute() / getNbEcoutesCompletes() / (getDuree() / 60000.0)) * 100) / (float)100 + ((int)(getTempsEcoute() / (float)100) / (float)100);
-    }
-
     public String toString() {
         return nom + " - " + artiste.getNom();
     }

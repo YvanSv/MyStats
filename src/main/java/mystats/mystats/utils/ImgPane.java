@@ -492,12 +492,15 @@ public class ImgPane extends HBox {
 
     private String getColorRating(Donnee d) {
         float rating = d.getRating();
-        if (d instanceof Musique || d instanceof Ecoute) {
+        if (d instanceof Ecoute) {
             if (rating < 0.6) return "red";
             else if (rating > 0.8) return "green";
-        } else if (d instanceof Artiste || d instanceof Album) {
+        } else if ( d instanceof Artiste || d instanceof Album) {
             if (rating < 1.2) return "red";
-            else if (rating > 1.7) return "green";
+            else if (rating > 1.8) return "green";
+        } else if (d instanceof Musique) {
+            if (rating < 1.5) return "red";
+            else if (rating > 2.2) return "green";
         } return "gray";
     }
 
