@@ -229,8 +229,6 @@ public class VueParametres {
         root.getStyleClass().add("popup");
         popup.getContent().add(root);
 
-
-
         Rectangle overlay = new Rectangle();
         overlay.setFill(Color.rgb(0, 0, 0, 0.75));
 

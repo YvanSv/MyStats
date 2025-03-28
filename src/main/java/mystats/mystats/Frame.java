@@ -2,21 +2,30 @@ package mystats.mystats;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import javafx.stage.Popup;
 import mystats.mystats.metier.DataReader;
 import mystats.mystats.utils.*;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.awt.Desktop;
 
 public class Frame {
     @FXML private BorderPane frame;
@@ -83,7 +92,9 @@ public class Frame {
         importFile.getStyleClass().addAll("low-size","white","bouton","clickable");
 
         Button infosDatas = new Button(language.getString("infosDatas"));
-        infosDatas.setOnAction(e -> infos());
+        infosDatas.setOnAction(e -> {
+            try { popupInfos(); } catch (Exception ignored) {}
+        });
         infosDatas.getStyleClass().addAll("low-size","white","bouton","clickable");
         accueil.getChildren().addAll(noFile,importFile,infosDatas);
     }
@@ -169,12 +180,75 @@ public class Frame {
             btn.setOnAction(e -> importer());
             Button infos = new Button(language.getString("infosDatas"));
             infos.getStyleClass().addAll("low-size","white","bouton");
-            infos.setOnAction(e -> infos());
+            infos.setOnAction(e -> {
+                try { popupInfos(); } catch (Exception ignored) {}
+            });
             accueil = new VBox(txt,btn,infos);
             accueil.getStyleClass().add("accueil");
             frame.setCenter(accueil);
         }
         ImgPane.resetTitres();
+    }
+
+    private void popupInfos() throws URISyntaxException, IOException {
+        Popup popup = new Popup();
+        BorderPane root = new BorderPane();
+        ResourceBundle language = Langue.bundle;
+
+        Label vide = new Label();
+        Label titre = new Label(language.getString("informations"));
+        Button quitter = new Button("X");
+        vide.setPrefWidth(Tailles.WIDTH_SCREEN * 0.1);
+        titre.setPrefWidth(Tailles.WIDTH_SCREEN * 0.5);
+        quitter.setPrefWidth(Tailles.WIDTH_SCREEN * 0.1);
+        titre.setAlignment(Pos.CENTER);
+        quitter.setAlignment(Pos.CENTER_RIGHT);
+        titre.getStyleClass().addAll("low-size","white","center");
+        quitter.getStyleClass().addAll("clickable","fermer");
+        HBox top = new HBox(vide,titre,quitter);
+        top.setPrefWidth(Tailles.WIDTH_SCREEN * 0.7);
+        top.getStyleClass().add("box-titre");
+
+        VBox center = new VBox();
+        center.setSpacing(5);
+        center.setPadding(new Insets(20,20,20,20));
+        Label lbl1 = new Label(language.getString("infosDatasL1"));
+        Hyperlink lbl2 = new Hyperlink("https://www.spotify.com/ca-fr/account/privacy/");
+        lbl2.setOnMouseClicked(e -> {
+            try { Desktop.getDesktop().browse(new URI("https://www.spotify.com/ca-fr/account/privacy/")); } catch (Exception ignored) {}
+        });
+        Label lbl3 = new Label(language.getString("infosDatasL3"));
+        Label lbl4 = new Label(language.getString("infosDatasL4"));
+        Label lbl5 = new Label(language.getString("infosDatasL5"));
+        Label lbl6 = new Label(language.getString("infosDatasL6"));
+        lbl1.getStyleClass().add("fichier");
+        lbl2.getStyleClass().add("lien");
+        lbl3.getStyleClass().add("fichier");
+        lbl4.getStyleClass().add("fichier");
+        lbl5.getStyleClass().add("fichier");
+        lbl6.getStyleClass().add("fichier");
+        center.getChildren().addAll(lbl1,lbl2,lbl3,lbl4,lbl5,lbl6);
+        root.setTop(top);
+        root.setCenter(center);
+        root.getStyleClass().add("popup");
+        popup.getContent().add(root);
+
+        Rectangle overlay = new Rectangle();
+        overlay.setFill(Color.rgb(0, 0, 0, 0.75));
+
+        overlay.setOnMouseClicked(e -> {
+            popup.hide();
+            App.removeFond(overlay);
+        });
+        quitter.setOnMouseClicked(e -> {
+            popup.hide();
+            App.removeFond(overlay);
+        });
+
+        if (!popup.isShowing()) {
+            App.addFond(overlay);
+            popup.show(App.stage);
+        }
     }
 
     @FXML private void vueMusiques() {
@@ -259,15 +333,6 @@ public class Frame {
         // else System.out.println("Aucun fichier sélectionné");
         creerStats();
         accueil();
-    }
-
-    @FXML private void infos() {
-        System.out.println("Pour télécharger vos données d'historiques Spotify, rendez-vous sur cette page :");
-        System.out.println("https://www.spotify.com/ca-fr/account/privacy/");
-        System.out.println("Connectez-vous à votre compte Spotify, et cochez l'option \"Historique prolongé des diffusions en continu\" en bas de la page.");
-        System.out.println("Confirmez ensuite votre demande, à savoir que vous recevrez vos fichiers via un mail envoyé à la boîte associée à votre compte.");
-        System.out.println("Les données arrivent sous 30 jours, régulièrement 2 semaines. Pensez à regarder de temps en temps votre boîte mail.");
-        System.out.println("Il est aussi régulier que le lien fourni dans le mail soit expiré avant d'avoir été utilisé, dans ce cas demander de l'aide auprès de leur support, ils sont rapides.");
     }
 
     public void creerStats() {

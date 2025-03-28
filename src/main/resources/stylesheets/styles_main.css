@@ -21,6 +21,16 @@
     -fx-text-alignment: center;
 }
 
+.lien {
+    -fx-font-size: 16px;
+    -fx-text-alignment: center;
+    -fx-text-fill: #207fc2;
+}
+
+.lien:hover {
+    -fx-underline: true;
+}
+
 /* LISTES */
 
 .super-size {
