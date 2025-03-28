@@ -57,7 +57,7 @@ public class Ecoute extends Donnee {
     }
     @Override public float getRating() {
         if (getMusique(this.nom).getDuree() == 0) return 0;
-        return (float)getDuree() / getMusique(this.nom).getDuree();
+        return (int)((float)getDuree() / getMusique(this.nom).getDuree() * 100) / (float)100;
     }
 
     public String getUri() {

@@ -173,7 +173,7 @@
 
 .combo-box .arrow-button {
     -fx-opacity: 0;  /* Rendre invisible */
-    -fx-padding: 0;   /* Supprime les marges */
+    -fx-padding: 0; /* Supprime les marges */
     -fx-background-color: transparent; /* Rend l'arrière-plan transparent */
 }
 

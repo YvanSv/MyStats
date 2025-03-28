@@ -77,7 +77,7 @@ public class Musique extends Donnee{
 
     @Override public float getRating() {
         if (getDuree() == 0) return 0;
-        return (float) (getRatio() / 100.0 * getTempsEcoute() / getNbEcoutes() / (getDuree() / 60000.0));
+        return (int)((getRatio() / 100.0 * getTempsEcoute() / getNbEcoutesCompletes() / (getDuree() / 60000.0)) * 100) / (float)100.0;
     }
 
     public String toString() {

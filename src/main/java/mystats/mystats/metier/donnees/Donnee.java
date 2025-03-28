@@ -20,7 +20,7 @@ public abstract class Donnee {
 
     public float getRating() {
         if (getNbEcoutes() == 0) return 0;
-        return (float) (getRatio() / 100.0 * getTempsEcoute() / getNbEcoutes());
+        return (int)(getRatio() / 100.0 * getTempsEcoute() / getNbEcoutes() * 100) / (float)100;
     }
 
     public String getNom() {
