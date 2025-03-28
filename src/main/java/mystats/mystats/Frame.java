@@ -124,6 +124,7 @@ public class Frame {
 
     public void changeLanguage() {
         initialize();
+        creerStats();
     }
 
     private void setSelected(Label l) {
