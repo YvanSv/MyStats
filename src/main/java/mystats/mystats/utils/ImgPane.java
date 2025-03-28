@@ -623,7 +623,9 @@ public class ImgPane extends HBox {
 
     private String getStringTempsEcoute(int tempsEcoute) {
         ResourceBundle language = Langue.bundle;
-        return tempsEcoute + " " + language.getString("minutes") + " (= " + toHours(tempsEcoute) + " " + language.getString("hours").toLowerCase() + ")";
+        String res = tempsEcoute + " " + language.getString("minutes");
+        if (tempsEcoute >= 120) res += " (= " + toHours(tempsEcoute) + " " + language.getString("hours").toLowerCase() + ")";
+        return res;
     }
 
     private int toHours(int minutes) {
