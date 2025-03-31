@@ -29,40 +29,28 @@ public class DataReader {
     public void importDatas(List<File> lstFiles) {
         if (lstFiles != null) {
             for (File file : lstFiles) {
-                if (file.getName().endsWith(".zip")) {
-                    try {
+                try {
+                    if (file.getName().endsWith(".zip")) {
                         ZipFile zip = new ZipFile(file);
                         Enumeration<? extends ZipEntry> children = zip.entries();
-                        while (children.hasMoreElements()) addFile(children.nextElement(),zip,file.getAbsolutePath());
-                    } catch (Exception e) { e.printStackTrace(); }
-                } else if (file.getName().endsWith(".json")) addFile(file);
+                        while (children.hasMoreElements()) {
+                            ZipEntry entry = children.nextElement();
+                            if (entry.getName().endsWith(".json")) {
+                                Fichier f = new Fichier(entry.getName().split("/")[entry.getName().split("/").length - 1], file.getAbsolutePath() + "\\" + entry.getName());
+                                addFile(f, zip.getInputStream(entry));
+                            }
+                        }
+                    } else if (file.getName().endsWith(".json"))
+                        addFile(new Fichier(file.getName(), file.getAbsolutePath()),new FileInputStream(file.getAbsolutePath()));
+                } catch (Exception e) { e.printStackTrace(); }
             }
         }
     }
 
-    private void addFile(File file) {
-        Fichier f = new Fichier(file.getName(), file.getAbsolutePath());
+    private void addFile(Fichier f, InputStream is) {
         for (Fichier f2 : fichiers) if (f.equals(f2)) return;
         this.fichiers.add(f);
-        try {
-            InputStream inputStream = new FileInputStream(f.getLien());
-            Scanner sc = new Scanner(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-            lireFichier(sc,f);
-        } catch (Exception e) { e.printStackTrace(); }
-        creerMusiques();
-        setNature(tmpHistorique);
-        System.out.println("Fichier " + f.getNom() + " chargé.");
-    }
-
-    private void addFile(ZipEntry file, ZipFile zip, String originalPath) {
-        if (!file.getName().endsWith(".json")) return;
-        Fichier f = new Fichier(file.getName().split("/")[file.getName().split("/").length-1], originalPath+"\\"+file.getName());
-        for (Fichier f2 : fichiers) if (f.equals(f2)) return;
-        this.fichiers.add(f);
-        try {
-            Scanner sc = new Scanner(new InputStreamReader(zip.getInputStream(file), StandardCharsets.UTF_8));
-            lireFichier(sc,f);
-        } catch (Exception e) { e.printStackTrace(); }
+        lireFichier(f,is);
         creerMusiques();
         setNature(tmpHistorique);
         System.out.println("Fichier " + f.getNom() + " chargé.");
@@ -70,15 +58,6 @@ public class DataReader {
 
     public void removeFichier(Fichier f) {
         fichiers.remove(f);
-
-        /*historique.clear();
-        selection.clear();
-        playlist.clear();
-        tmpHistorique.clear();
-        for (Fichier f2 : fichiers)
-            lireFichier(f2);
-        creerMusiques();
-        setNature(tmpHistorique);*/
         for (Ecoute e : f) {
             historique.remove(e);
             e.getMusique(e.getNom()).remove(e);
@@ -98,9 +77,10 @@ public class DataReader {
         tmpHistorique.clear();
     }
 
-    private void lireFichier(Scanner sc, Fichier fichier) {
+    private void lireFichier(Fichier fichier, InputStream is) {
         Ecoute ecoute = new Ecoute();
         String ligne;
+        Scanner sc = new Scanner(new InputStreamReader(is, StandardCharsets.UTF_8));
         while (sc.hasNextLine()) {
             ligne = sc.nextLine();
             if (ligne.contains("{")) ecoute = new Ecoute();
