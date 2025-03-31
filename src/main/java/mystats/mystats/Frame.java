@@ -335,6 +335,7 @@ public class Frame {
             stats.clear();
             stats.add(new StatistiquePane(dr.getNbEcoutes()+"",language.getString("listenings").toLowerCase()));
             stats.add(new StatistiquePane(dr.getNbArtistes()+"",language.getString("artists").toLowerCase()));
+            stats.add(new StatistiquePane(dr.getNbAlbums()+"",language.getString("albums").toLowerCase()));
             stats.add(new StatistiquePane(dr.getNbMusiques()+"",language.getString("musics").toLowerCase()));
             stats.add(new StatistiquePane(dr.getNbEcoutesCompletes()+"",language.getString("fullyListened").toLowerCase()));
             stats.add(new StatistiquePane(dr.getNbSkips()+"",language.getString("skips").toLowerCase()));
