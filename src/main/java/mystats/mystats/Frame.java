@@ -18,10 +18,8 @@ import javafx.stage.Popup;
 import mystats.mystats.metier.DataReader;
 import mystats.mystats.utils.*;
 
-import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.awt.Desktop;
 
@@ -322,12 +320,9 @@ public class Frame {
         DataReader dr = DataReader.getInstance();
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Fichiers JSON", "*.json")
+                new FileChooser.ExtensionFilter("Fichiers JSON ou ZIP", "*.json","*.zip")
         );
-        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(App.stage);
-        if (selectedFiles != null)
-            for (File file : selectedFiles)
-                dr.addFichier(new Fichier(file.getName(),file.getAbsolutePath()));
+        dr.importDatas(fileChooser.showOpenMultipleDialog(App.stage));
         // else System.out.println("Aucun fichier sélectionné");
         creerStats();
         accueil();

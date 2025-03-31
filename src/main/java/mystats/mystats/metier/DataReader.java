@@ -7,12 +7,11 @@ import mystats.mystats.utils.Fichier;
 import mystats.mystats.utils.Filtre;
 import mystats.mystats.utils.Parametres;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class DataReader {
     private static DataReader dr;
@@ -27,11 +26,43 @@ public class DataReader {
         return fichiers;
     }
 
-    public void addFichier(Fichier f) {
-        for (Fichier f2 : fichiers)
-            if (f.equals(f2)) return;
+    public void importDatas(List<File> lstFiles) {
+        if (lstFiles != null) {
+            for (File file : lstFiles) {
+                if (file.getName().endsWith(".zip")) {
+                    try {
+                        ZipFile zip = new ZipFile(file);
+                        Enumeration<? extends ZipEntry> children = zip.entries();
+                        while (children.hasMoreElements()) addFile(children.nextElement(),zip,file.getAbsolutePath());
+                    } catch (Exception e) { e.printStackTrace(); }
+                } else if (file.getName().endsWith(".json")) addFile(file);
+            }
+        }
+    }
+
+    private void addFile(File file) {
+        Fichier f = new Fichier(file.getName(), file.getAbsolutePath());
+        for (Fichier f2 : fichiers) if (f.equals(f2)) return;
         this.fichiers.add(f);
-        lireFichier(f);
+        try {
+            InputStream inputStream = new FileInputStream(f.getLien());
+            Scanner sc = new Scanner(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+            lireFichier(sc,f);
+        } catch (Exception e) { e.printStackTrace(); }
+        creerMusiques();
+        setNature(tmpHistorique);
+        System.out.println("Fichier " + f.getNom() + " chargé.");
+    }
+
+    private void addFile(ZipEntry file, ZipFile zip, String originalPath) {
+        if (!file.getName().endsWith(".json")) return;
+        Fichier f = new Fichier(file.getName().split("/")[file.getName().split("/").length-1], originalPath+"\\"+file.getName());
+        for (Fichier f2 : fichiers) if (f.equals(f2)) return;
+        this.fichiers.add(f);
+        try {
+            Scanner sc = new Scanner(new InputStreamReader(zip.getInputStream(file), StandardCharsets.UTF_8));
+            lireFichier(sc,f);
+        } catch (Exception e) { e.printStackTrace(); }
         creerMusiques();
         setNature(tmpHistorique);
         System.out.println("Fichier " + f.getNom() + " chargé.");
@@ -67,34 +98,30 @@ public class DataReader {
         tmpHistorique.clear();
     }
 
-    private void lireFichier(Fichier fichier) {
+    private void lireFichier(Scanner sc, Fichier fichier) {
         Ecoute ecoute = new Ecoute();
         String ligne;
-        try {
-            InputStream inputStream = new FileInputStream(fichier.getLien());
-            Scanner sc = new Scanner(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-            while (sc.hasNextLine()) {
-                ligne = sc.nextLine();
-                if (ligne.contains("{")) ecoute = new Ecoute();
-                else if (ligne.contains("},")) {
-                    tmpHistorique.add(ecoute);
-                    fichier.add(ecoute);
-                }
-                else if (ligne.contains(":")) {
-                    switch (getAttribut(ligne)) {
-                        case "endTime" -> ecoute.setDate(new Date(getValue(ligne)));
-                        case "ts" -> ecoute.setDate(new Date(getValue(ligne).replace('T',' ').split(":")[0]+":"+getValue(ligne).split(":")[1]));
-                        case "artistName", "master_metadata_album_artist_name" -> ajouterArtiste(ecoute,getValue(ligne));
-                        case "trackName", "master_metadata_track_name" -> ecoute.setNom(getValue(ligne));
-                        case "msPlayed" -> ecoute.setDuree(Integer.parseInt(getValue(ligne)));
-                        case "ms_played" -> ecoute.setDuree(Integer.parseInt(getValue(ligne).split(",")[0]));
-                        case "master_metadata_album_album_name" -> ajouterAlbum(ecoute,getValue(ligne));
-                        case "spotify_track_uri" -> ecoute.setUri(getValue(ligne));
-                    }
+        while (sc.hasNextLine()) {
+            ligne = sc.nextLine();
+            if (ligne.contains("{")) ecoute = new Ecoute();
+            else if (ligne.contains("},")) {
+                tmpHistorique.add(ecoute);
+                fichier.add(ecoute);
+            }
+            else if (ligne.contains(":")) {
+                switch (getAttribut(ligne)) {
+                    case "endTime" -> ecoute.setDate(new Date(getValue(ligne)));
+                    case "ts" -> ecoute.setDate(new Date(getValue(ligne).replace('T',' ').split(":")[0]+":"+getValue(ligne).split(":")[1]));
+                    case "artistName", "master_metadata_album_artist_name" -> ajouterArtiste(ecoute,getValue(ligne));
+                    case "trackName", "master_metadata_track_name" -> ecoute.setNom(getValue(ligne));
+                    case "msPlayed" -> ecoute.setDuree(Integer.parseInt(getValue(ligne)));
+                    case "ms_played" -> ecoute.setDuree(Integer.parseInt(getValue(ligne).split(",")[0]));
+                    case "master_metadata_album_album_name" -> ajouterAlbum(ecoute,getValue(ligne));
+                    case "spotify_track_uri" -> ecoute.setUri(getValue(ligne));
                 }
             }
-            sc.close();
-        } catch (Exception e) { e.printStackTrace(); }
+        }
+        sc.close();
     }
 
     private String getAttribut(String ligne) {

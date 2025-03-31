@@ -20,8 +20,6 @@ import mystats.mystats.utils.Langue;
 import mystats.mystats.utils.Parametres;
 import mystats.mystats.utils.Tailles;
 
-import java.io.File;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class VueParametres {
@@ -150,13 +148,9 @@ public class VueParametres {
     @FXML private void chargerFichiers() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("Fichiers JSON", "*.json")
+                new FileChooser.ExtensionFilter("Fichiers JSON ou ZIP", "*.json","*.zip")
         );
-        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(App.stage);
-        if (selectedFiles != null)
-            for (File file : selectedFiles)
-                DataReader.getInstance().addFichier(new Fichier(file.getName(),file.getAbsolutePath()));
-        // else System.out.println("Aucun fichier sélectionné");
+        DataReader.getInstance().importDatas(fileChooser.showOpenMultipleDialog(App.stage));
         frame.creerStats();
         actualiser();
     }
