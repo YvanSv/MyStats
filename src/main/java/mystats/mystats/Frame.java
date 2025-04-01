@@ -125,7 +125,6 @@ public class Frame {
             setSelected(lblAlbums);
         }
         //if (frame.getCenter() == graphiques) vueGraphique();
-        ImgPane.resetTitres();
         clear = true;
     }
 
@@ -249,6 +248,7 @@ public class Frame {
 
     @FXML private void vueMusiques() {
         if (clear) Filtre.getInstance().clear();
+        Filtre.getInstance().setType(0);
         setSelected(lblMusics);
         ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
@@ -260,6 +260,7 @@ public class Frame {
 
     @FXML private void vueArtistes() {
         if (clear) Filtre.getInstance().clear();
+        Filtre.getInstance().setType(1);
         setSelected(lblArtists);
         ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
@@ -271,6 +272,7 @@ public class Frame {
 
     @FXML private void vueAlbums() {
         if (clear) Filtre.getInstance().clear();
+        Filtre.getInstance().setType(3);
         setSelected(lblAlbums);
         ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
@@ -282,6 +284,7 @@ public class Frame {
 
     @FXML private void vueHistorique() {
         if (clear) Filtre.getInstance().clear();
+        Filtre.getInstance().setType(2);
         setSelected(lblHistoric);
         ImgPane.resetTitres();
         FXMLLoader loader = new FXMLLoader();
@@ -323,7 +326,6 @@ public class Frame {
                 new FileChooser.ExtensionFilter("Fichiers JSON ou ZIP", "*.json","*.zip")
         );
         dr.importDatas(fileChooser.showOpenMultipleDialog(App.stage));
-        // else System.out.println("Aucun fichier sélectionné");
         creerStats();
         accueil();
     }

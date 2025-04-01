@@ -3,12 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
 <HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="mystats.mystats.VueEcoutes">
     <GridPane fx:id="gridFiltres" vgap="25" hgap="20">
-        <padding>
-            <Insets top="20" bottom="20" left="20" right="20"/>
-        </padding>
         <Label fx:id="lblListened" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="very-low-size,white"/>
         <CheckBox fx:id="cbEcoutees" onAction="#nature" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
         <Label fx:id="lblSkipped" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="very-low-size,white"/>

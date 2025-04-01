@@ -26,7 +26,7 @@ public class VueEcoutes extends VuePrincipale {
         lblListened.setText(language.getString("listened"));
         lblSkipped.setText(language.getString("skipped"));
         lblArtist.setText(language.getString("artist"));
-        setupFilters();
+        // setupFilters();
     }
 
     public void actualiser() {

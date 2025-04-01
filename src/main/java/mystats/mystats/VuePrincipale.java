@@ -1,21 +1,23 @@
 package mystats.mystats;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import mystats.mystats.utils.Filtre;
+import mystats.mystats.utils.ImgPane;
 import mystats.mystats.utils.Langue;
 import mystats.mystats.utils.Tailles;
 
 import java.util.ResourceBundle;
 
 public abstract class VuePrincipale {
+    @FXML protected Label cacherFiltres;
+    @FXML protected VBox paneFiltres;
     @FXML protected GridPane gridFiltres;
     @FXML protected Label lblListened;
     @FXML protected Label lblSkipped;
@@ -47,26 +49,61 @@ public abstract class VuePrincipale {
     }
 
     protected void classicFilters() {
-        ResourceBundle language = Langue.bundle;
-        lblListened.setText(language.getString("listenings"));
-        lblSkipped.setText(language.getString("skips"));
-        lblArtist.setText(language.getString("artist"));
-        lblMin.setText(language.getString("minimum"));
-        lblMax.setText(language.getString("maximum"));
-        lblFully.setText(language.getString("fullyListened"));
-        lblRatio.setText(language.getString("ratio"));
-        setupFilters();
+        if (Tailles.areFiltersHidden()) {
+            paneFiltres.getChildren().removeAll(cacherFiltres,gridFiltres);
+            ImgPane.addLabelFilters();
+        } else {
+            paneFiltres.setPadding(new Insets(10,10,10,10));
+            ImgPane.removeLabelFilters();
+            cacherFiltres.setPrefSize(Tailles.WIDTH_LISTE*0.06,Tailles.WIDTH_LISTE*0.05+100);
+            cacherFiltres.getStyleClass().addAll("medium-size","white","clickable");
+            cacherFiltres.setPadding(new Insets(10,20,10,6));
+            // Mettre à jour les label en fonction de la langue
+            ResourceBundle language = Langue.bundle;
+            lblListened.setText(language.getString("listenings"));
+            lblSkipped.setText(language.getString("skips"));
+            lblArtist.setText(language.getString("artist"));
+            lblMin.setText(language.getString("minimum"));
+            lblMax.setText(language.getString("maximum"));
+            lblFully.setText(language.getString("fullyListened"));
+            lblRatio.setText(language.getString("ratio"));
+
+            // Mettre à jour la taille du pane et le padding
+            gridFiltres.setPrefSize(Tailles.WIDTH_FILTRES, Tailles.HEIGHT_FILTRES);
+            gridFiltres.setPadding(new Insets(Tailles.HEIGHT_FILTRES * 0.2, Tailles.WIDTH_FILTRES * 0.07, Tailles.HEIGHT_FILTRES * 0.2, Tailles.WIDTH_FILTRES * 0.07));
+            /*gridFiltres.setHgap(Tailles.WIDTH_FILTRES * 0.03);
+            gridFiltres.setVgap(Tailles.HEIGHT_FILTRES * 0.05);*/
+            gridFiltres.setAlignment(Pos.CENTER);
+
+            // Définir la taille des éléments du pane
+            double largeurTxtField = Tailles.WIDTH_FILTRES * 0.15,
+                    hauteurTxtField = 15,
+                    largeurPane = largeurTxtField + Tailles.WIDTH_FILTRES * 0.15,
+                    hauteurPane = hauteurTxtField + Tailles.HEIGHT_FILTRES * 0.05;
+            for (Node n : gridFiltres.getChildren())
+                if (n instanceof VBox) {
+                    VBox sp = ((VBox) n);
+                    sp.setPrefSize(largeurPane, hauteurPane);
+                    sp.setAlignment(Pos.CENTER);
+
+                    for (Node n2 : sp.getChildren())
+                        if (n2 instanceof TextField)
+                            ((TextField) n2).setPrefSize(largeurTxtField, hauteurTxtField);
+                }
+            GridPane.setColumnSpan(artName, 2);
+
+            // content.setAlignment(Pos.CENTER);
+            // content.setPrefSize(Tailles.WIDTH_LISTE,Tailles.HEIGHT_LISTE);
+            // scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        }
+        actualiser();
     }
 
-    protected void setupFilters() {
-        gridFiltres.setAlignment(Pos.CENTER);
-        for (Node n : gridFiltres.getChildren())
-            if (n instanceof TextField) ((TextField)n).setPrefSize(50,20);
-        GridPane.setColumnSpan(artName, 2);
-        content.setAlignment(Pos.CENTER);
-        actualiser();
-        // content.setPrefSize(Tailles.WIDTH_LISTE,Tailles.HEIGHT_LISTE);
-        // scroll.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+    @FXML public void cacherFiltres() {
+        Tailles.changeFiltresHidden();
+        Tailles.setTailles(Tailles.WIDTH_SCREEN,Tailles.HEIGHT_SCREEN);
+        content.getChildren().clear();
+        frame.actualiser();
     }
 
     @FXML private void changeEcMin() {

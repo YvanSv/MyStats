@@ -19,12 +19,25 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class ImgPane extends HBox {
-    private final static double sizeImg = 0.05 * Tailles.WIDTH_LISTE;
+    // private final static double sizeImg = 0.05 * Tailles.WIDTH_LISTE;
+    private final static double widthIndex = Tailles.WIDTH_LISTE*0.06;
+    private final static double widthImg = Tailles.WIDTH_LISTE*0.05;
+    private final static Label[] lblTitresIndex = {new Label("🔗"),new Label("🔗"),new Label("🔗"),new Label("🔗")};
     private static ImgPane titresMusiques;
     private static ImgPane titresArtistes;
     private static ImgPane titresEcoutes;
     private static ImgPane titresAlbums;
     private static VuePrincipale vue;
+
+    public static  void addLabelFilters() {
+        for (Label l : lblTitresIndex)
+            l.setVisible(true);
+    }
+
+    public static  void removeLabelFilters() {
+        for (Label l : lblTitresIndex)
+            l.setVisible(false);
+    }
 
     public static ImgPane getTitresMusiques() {
         if (titresMusiques == null) titresMusiques = new ImgPane(0);
@@ -60,7 +73,7 @@ public class ImgPane extends HBox {
     public ImgPane() {
         setPadding(new Insets(10,10,10,10));
         setSpacing(10);
-        setPrefSize(Tailles.WIDTH_LISTE,sizeImg);
+        setPrefSize(Tailles.WIDTH_LISTE,widthImg);
         setBackground(Couleur.backgroundFull(Color.web("#1f1f1f")));
         setAlignment(Pos.CENTER);
 
@@ -75,20 +88,30 @@ public class ImgPane extends HBox {
     private ImgPane(int tri) {
         ResourceBundle language = Langue.bundle;
         setPadding(new Insets(10,10,10,10));
-        setSpacing(10);
-        setPrefSize(Tailles.WIDTH_LISTE,sizeImg);
+        setPrefSize(Tailles.WIDTH_LISTE,widthImg);
         setBackground(Couleur.backgroundFull(Color.web("#1f1f1f")));
         setAlignment(Pos.CENTER_LEFT);
-        Label index = new Label();
-        index.setPrefWidth(Tailles.WIDTH_LISTE*0.06);
+        Label lblIndex = lblTitresIndex[tri];
+        lblIndex.setPrefWidth(widthIndex);
+        lblIndex.getStyleClass().addAll("medium-size","white","clickable");
+        lblIndex.setOnMouseClicked(e -> vue.cacherFiltres());
+        VBox indexPane = new VBox(lblIndex);
+        indexPane.setPrefWidth(Tailles.WIDTH_LISTE*0.06);
+        indexPane.setAlignment(Pos.CENTER);
+        indexPane.setPadding(new Insets(0,10,0,0));
         Label img = new Label();
-        img.setPrefWidth(sizeImg);
+        img.setPrefSize(widthImg,widthImg);
+        StackPane imgPane = new StackPane(img);
+        imgPane.setPrefWidth(widthImg);
+        imgPane.setAlignment(Pos.CENTER);
         ArrayList<Label> lstLabel = new ArrayList<>();
         Label rating = new Label(language.getString("rating"));
         rating.setPrefWidth(0.06*Tailles.WIDTH_LISTE);
         rating.setAlignment(Pos.CENTER);
         rating.setOnMouseClicked(e -> tri(lstLabel,rating,9));
         rating.getStyleClass().addAll("clickable","low-size","white");
+        VBox noms = new VBox();
+        noms.setPadding(new Insets(0,0,0,10));
 
         if (tri == 2) {
             Label musique = new Label(language.getString("music"));
@@ -97,7 +120,7 @@ public class ImgPane extends HBox {
             Label artiste = new Label(language.getString("artist"));
             artiste.getStyleClass().addAll("clickable","low-size","gray");
             artiste.setOnMouseClicked(e -> tri(lstLabel,artiste,3));
-            VBox noms = new VBox(musique,artiste);
+            noms.getChildren().addAll(musique,artiste);
             noms.setPrefWidth(0.38*Tailles.WIDTH_LISTE);
             noms.setAlignment(Pos.CENTER_LEFT);
 
@@ -121,7 +144,6 @@ public class ImgPane extends HBox {
             stats.setAlignment(Pos.CENTER_RIGHT);
 
             lstLabel.addAll(Arrays.asList(musique,artiste,nature,date,rating));
-            getChildren().addAll(index,img,noms,stats);
         } else {
             Label tempsEcoute = new Label(" \uD83D\uDD50");
             tempsEcoute.setOnMouseClicked(e -> tri(lstLabel,tempsEcoute,8));
@@ -148,8 +170,8 @@ public class ImgPane extends HBox {
             ratio.setAlignment(Pos.CENTER);
             total.setOnMouseClicked(e -> tri(lstLabel,total,5));
             ratio.setOnMouseClicked(e -> tri(lstLabel,ratio,2));
-            ratio.getStyleClass().addAll("clickable","low-size","white");
             total.getStyleClass().addAll("clickable","low-size","white");
+            ratio.getStyleClass().addAll("clickable","low-size","white");
 
             if (tri == 3) {
                 Label album = new Label(language.getString("album"));
@@ -159,24 +181,22 @@ public class ImgPane extends HBox {
                 album      .getStyleClass().addAll("clickable","low-size","white");
                 artiste    .getStyleClass().addAll("clickable","low-size","gray");
                 HBox nom = new HBox(artiste,tempsEcoute);
-                VBox noms = new VBox(album,nom);
+                noms.getChildren().addAll(album,nom);
                 noms.setPrefWidth(0.3*Tailles.WIDTH_LISTE);
                 noms.setAlignment(Pos.CENTER_LEFT);
 
                 lstLabel.addAll(Arrays.asList(album,artiste,tempsEcoute));
-                getChildren().addAll(index,img,noms);
             } else if (tri == 1) {
                 Label artiste = new Label(language.getString("artist"));
                 artiste    .getStyleClass().addAll("clickable","low-size","white");
                 artiste    .setOnMouseClicked(e -> tri(lstLabel,artiste,3));
                 VBox nomArtTemps = new VBox(artiste,tempsEcoute);
-                StackPane nom = new StackPane(nomArtTemps);
-                nom.setPrefWidth(0.3*Tailles.WIDTH_LISTE);
-                nom.setAlignment(Pos.CENTER_LEFT);
+                noms.getChildren().addAll(nomArtTemps);
+                noms.setPrefWidth(0.3*Tailles.WIDTH_LISTE);
+                noms.setAlignment(Pos.CENTER_LEFT);
                 tempsEcoute.setText("\uD83D\uDD50");
 
                 lstLabel.addAll(Arrays.asList(artiste,tempsEcoute));
-                getChildren().addAll(index,img,nom);
             } else if (tri == 0) {
                 Label musique = new Label(language.getString("music"));
                 Label artiste = new Label(language.getString("artist")+" ");
@@ -185,27 +205,25 @@ public class ImgPane extends HBox {
                 musique    .getStyleClass().addAll("clickable","low-size","white");
                 artiste    .getStyleClass().addAll("clickable","low-size","gray");
                 HBox nom = new HBox(artiste,tempsEcoute);
-                VBox noms = new VBox(musique,nom);
+                noms.getChildren().addAll(musique,nom);
                 noms.setPrefWidth(0.3*Tailles.WIDTH_LISTE);
                 noms.setAlignment(Pos.CENTER_LEFT);
 
                 lstLabel.addAll(Arrays.asList(musique,artiste,tempsEcoute));
-                getChildren().addAll(index,img,noms);
             }
 
             lstLabel.addAll(Arrays.asList(ecoutes,skips,total,ratio,rating));
             HBox stats = new HBox(ecoutes,slash,skips,total,ratio,rating);
             stats.setSpacing(0.02*Tailles.WIDTH_LISTE);
             stats.setAlignment(Pos.CENTER_RIGHT);
-            getChildren().add(stats);
+            getChildren().addAll(indexPane,imgPane,noms,stats);
         }
     }
 
     public ImgPane(int indice, Artiste art, boolean graphics, Frame frame) {
         if (graphics) {
             setPadding(new Insets(10,10,10,10));
-            setSpacing(10);
-            setPrefSize(Tailles.WIDTH_LISTE,sizeImg);
+            setPrefSize(Tailles.WIDTH_LISTE,widthImg+15);
             Color bgColor = Couleur.getAverageColor(art.getImage().getImage());
             String textColor = getMainTextColor(bgColor);
             setBackground(Couleur.backgroundFull(bgColor));
@@ -216,16 +234,17 @@ public class ImgPane extends HBox {
             StackPane indexPane = new StackPane(index);
             indexPane.setPrefWidth(Tailles.WIDTH_LISTE*0.06);
             indexPane.setAlignment(Pos.CENTER);
+            indexPane.setPadding(new Insets(0,10,0,0));
 
             ImageView copy = new ImageView(art.getImage().getImage());
             copy.setPreserveRatio(true);
             if (copy.getImage() != null) {
                 if (copy.getImage().getHeight() > copy.getImage().getWidth())
-                    copy.setFitHeight(sizeImg);
-                else copy.setFitWidth(sizeImg);
+                    copy.setFitHeight(widthImg);
+                else copy.setFitWidth(widthImg);
             }
             StackPane imgPane = new StackPane(copy);
-            imgPane.setPrefWidth(sizeImg);
+            imgPane.setPrefWidth(widthImg);
             imgPane.setAlignment(Pos.CENTER);
             setOnClick(imgPane,Filtre.TYPE_MUSIQUE,art.getNom(),null,null,-1,frame);
 
@@ -235,9 +254,10 @@ public class ImgPane extends HBox {
             Label tempsEcoute = new Label("\uD83D\uDD50 " + getStringTempsEcoute(art.getTempsEcoute()));
             tempsEcoute.getStyleClass().addAll("very-low-size",getSecondaryTextColor(bgColor));
             VBox nomArtTemps = new VBox(artName,tempsEcoute);
-            StackPane nom = new StackPane(nomArtTemps);
-            nom.setPrefWidth(0.38*Tailles.WIDTH_LISTE);
-            nom.setAlignment(Pos.CENTER_LEFT);
+            StackPane noms = new StackPane(nomArtTemps);
+            noms.setPrefWidth(0.38*Tailles.WIDTH_LISTE);
+            noms.setAlignment(Pos.CENTER_LEFT);
+            noms.setPadding(new Insets(0,0,0,10));
 
             /*Label ecoutes = new Label(art.getNbEcoutesCompletes() + "");
             Label slash = new Label("/");
@@ -266,15 +286,14 @@ public class ImgPane extends HBox {
             ratio.getStyleClass().addAll("medium-size",textColor);
             rating.getStyleClass().addAll("medium-size",textColor);
             setOnClick(total,Filtre.TYPE_ECOUTE,art.getNom(),null,null,-1,frame);*/
-            getChildren().addAll(indexPane,imgPane,nom,getStats(art,frame,textColor));
+            getChildren().addAll(indexPane,imgPane,noms,getStats(art,frame,textColor));
         }
     }
 
     public ImgPane(int indice, Musique mus, boolean graphics, Frame frame) {
         if (graphics) {
             setPadding(new Insets(10,10,10,10));
-            setSpacing(10);
-            setPrefSize(Tailles.WIDTH_LISTE,sizeImg);
+            setPrefSize(Tailles.WIDTH_LISTE,widthImg);
             Color bgColor = Couleur.getAverageColor(mus.getImage().getImage());
             String textColor = getMainTextColor(bgColor);
             setBackground(Couleur.backgroundFull(bgColor));
@@ -285,22 +304,23 @@ public class ImgPane extends HBox {
             StackPane indexPane = new StackPane(index);
             indexPane.setPrefWidth(Tailles.WIDTH_LISTE*0.06);
             indexPane.setAlignment(Pos.CENTER);
+            indexPane.setPadding(new Insets(0,10,0,0));
 
             ImageView copy = new ImageView(mus.getImage().getImage());
             copy.setPreserveRatio(true);
             if (copy.getImage() != null) {
                 if (copy.getImage().getHeight() > copy.getImage().getWidth())
-                    copy.setFitHeight(sizeImg);
-                else copy.setFitWidth(sizeImg);
+                    copy.setFitHeight(widthImg);
+                else copy.setFitWidth(widthImg);
             }
             StackPane imgPane = new StackPane(copy);
-            imgPane.setPrefWidth(sizeImg);
+            imgPane.setPrefWidth(widthImg);
             imgPane.setAlignment(Pos.CENTER);
-            this.setOnClick(imgPane,Filtre.TYPE_MUSIQUE,mus.getArtiste().getNom(),null,mus.getAlbum().getNom(),-1,frame);
+            this.setOnClick(copy,Filtre.TYPE_MUSIQUE,mus.getArtiste().getNom(),null,mus.getAlbum().getNom(),-1,frame);
 
             Label musName = new Label(mus.getNom());
             Label artName = new Label(mus.getArtiste().getNom());
-            Label tempsEcoute = new Label("  \uD83D\uDD50 "+getStringTempsEcoute(mus.getTempsEcoute()));
+            Label tempsEcoute = new Label(" \uD83D\uDD50 "+getStringTempsEcoute(mus.getTempsEcoute()));
             musName.getStyleClass().addAll("medium-size",textColor);
             artName.getStyleClass().addAll("low-size",getSecondaryTextColor(bgColor));
             tempsEcoute.getStyleClass().addAll("very-low-size",getSecondaryTextColor(bgColor));
@@ -308,40 +328,10 @@ public class ImgPane extends HBox {
             setOnClick(artName,Filtre.TYPE_MUSIQUE,mus.getArtiste().getNom(),null,null,-1,frame);
             HBox nom = new HBox(artName,tempsEcoute);
             VBox noms = new VBox(musName,nom);
+            noms.setPadding(new Insets(0,0,0,10));
             noms.setPrefWidth(0.38*Tailles.WIDTH_LISTE);
             noms.setAlignment(Pos.CENTER_LEFT);
 
-            /*Label ecoutes = new Label(mus.getNbEcoutesCompletes() + "");
-            ecoutes.setPrefWidth(0.06*Tailles.WIDTH_LISTE);
-            ecoutes.getStyleClass().addAll("medium-size",textColor);
-            ecoutes.setAlignment(Pos.CENTER_RIGHT);
-            setOnClick(ecoutes,Filtre.TYPE_ECOUTE,mus.getArtiste().getNom(),mus.getNom(),null,1,frame);
-            Label slash = new Label("/");
-            slash.setPrefWidth(0.01*Tailles.WIDTH_LISTE);
-            slash.getStyleClass().addAll("medium-size",textColor);
-            slash.setAlignment(Pos.CENTER);
-            Label skips = new Label(mus.getNbSkips()+"");
-            skips.setPrefWidth(0.06*Tailles.WIDTH_LISTE);
-            skips.getStyleClass().addAll("medium-size",textColor);
-            skips.setAlignment(Pos.CENTER_LEFT);
-            setOnClick(skips,Filtre.TYPE_ECOUTE,mus.getArtiste().getNom(),mus.getNom(),null,0,frame);
-
-            Label total = new Label(mus.getNbEcoutes()+"");
-            total.setPrefWidth(0.05*Tailles.WIDTH_LISTE);
-            total.getStyleClass().addAll("medium-size",textColor);
-            total.setAlignment(Pos.CENTER);
-            setOnClick(total,Filtre.TYPE_ECOUTE,mus.getArtiste().getNom(),mus.getNom(),null,-1,frame);
-            Label ratio = new Label(String.format("(%2.2f",mus.getRatio())+"%)");
-            ratio.setPrefWidth(0.1*Tailles.WIDTH_LISTE);
-            ratio.getStyleClass().addAll("medium-size",textColor);
-            Label rating = new Label(String.format("%1.2f",mus.getRating()));
-            rating.setPrefWidth(0.07*Tailles.WIDTH_LISTE);
-            rating.setAlignment(Pos.CENTER);
-            rating.getStyleClass().addAll("medium-size",textColor);
-
-            HBox stats = new HBox(ecoutes,slash,skips,total,ratio,rating);
-            stats.setSpacing(0.02*Tailles.WIDTH_LISTE);
-            stats.setAlignment(Pos.CENTER_RIGHT);*/
             getChildren().addAll(indexPane,imgPane,noms,getStats(mus,frame,textColor));
         }
     }
@@ -349,8 +339,7 @@ public class ImgPane extends HBox {
     public ImgPane(int indice, Album alb, boolean graphics,Frame frame) {
         if (graphics) {
             setPadding(new Insets(10,10,10,10));
-            setSpacing(10);
-            setPrefSize(Tailles.WIDTH_LISTE,sizeImg);
+            setPrefSize(Tailles.WIDTH_LISTE,widthImg);
             Color bgColor = Couleur.getAverageColor(alb.getImage().getImage());
             String textColor = getMainTextColor(bgColor);
             setBackground(Couleur.backgroundFull(bgColor));
@@ -361,16 +350,17 @@ public class ImgPane extends HBox {
             StackPane indexPane = new StackPane(index);
             indexPane.setPrefWidth(Tailles.WIDTH_LISTE*0.06);
             indexPane.setAlignment(Pos.CENTER);
+            indexPane.setPadding(new Insets(0,10,0,0));
 
             ImageView copy = new ImageView(alb.getImage().getImage());
             copy.setPreserveRatio(true);
             if (copy.getImage() != null) {
                 if (copy.getImage().getHeight() > copy.getImage().getWidth())
-                    copy.setFitHeight(sizeImg);
-                else copy.setFitWidth(sizeImg);
+                    copy.setFitHeight(widthImg);
+                else copy.setFitWidth(widthImg);
             }
             StackPane imgPane = new StackPane(copy);
-            imgPane.setPrefWidth(sizeImg);
+            imgPane.setPrefWidth(widthImg);
             imgPane.setAlignment(Pos.CENTER);
             this.setOnClick(imgPane,Filtre.TYPE_MUSIQUE,alb.getArtiste().getNom(),null,alb.getNom(),-1,frame);
 
@@ -380,12 +370,14 @@ public class ImgPane extends HBox {
             Label artName = new Label(alb.getArtiste().getNom());
             artName.getStyleClass().addAll("low-size",getSecondaryTextColor(bgColor));
             this.setOnClick(artName,Filtre.TYPE_MUSIQUE,alb.getArtiste().getNom(),null,null,-1,frame);
-            Label tempsEcoute = new Label(" \uD83D\uDD50"+getStringTempsEcoute(alb.getTempsEcoute()));
+            Label tempsEcoute = new Label(" \uD83D\uDD50 "+getStringTempsEcoute(alb.getTempsEcoute()));
             tempsEcoute.getStyleClass().addAll("very-low-size",getSecondaryTextColor(bgColor));
             HBox nom = new HBox(artName,tempsEcoute);
             VBox noms = new VBox(albName,nom);
             noms.setPrefWidth(0.38*Tailles.WIDTH_LISTE);
             noms.setAlignment(Pos.CENTER_LEFT);
+            noms.setPadding(new Insets(0,0,0,10));
+
             getChildren().addAll(indexPane,imgPane,noms,getStats(alb,frame,textColor));
         }
     }
@@ -393,8 +385,7 @@ public class ImgPane extends HBox {
     public ImgPane(int indice, Ecoute eco, boolean graphics, Frame frame) {
         if (graphics) {
             setPadding(new Insets(10,10,10,10));
-            setSpacing(10);
-            setPrefSize(Tailles.WIDTH_LISTE,sizeImg);
+            setPrefSize(Tailles.WIDTH_LISTE,widthImg);
             Color bgColor = Couleur.getAverageColor(eco.getImage().getImage());
             String textColor = getMainTextColor(bgColor);
             setBackground(Couleur.backgroundFull(bgColor));
@@ -405,16 +396,17 @@ public class ImgPane extends HBox {
             StackPane indexPane = new StackPane(index);
             indexPane.setPrefWidth(Tailles.WIDTH_LISTE*0.06);
             indexPane.setAlignment(Pos.CENTER);
+            indexPane.setPadding(new Insets(0,10,0,0));
 
             ImageView copy = new ImageView(eco.getImage().getImage());
             copy.setPreserveRatio(true);
             if (copy.getImage() != null) {
                 if (copy.getImage().getHeight() > copy.getImage().getWidth())
-                    copy.setFitHeight(sizeImg);
-                else copy.setFitWidth(sizeImg);
+                    copy.setFitHeight(widthImg);
+                else copy.setFitWidth(widthImg);
             }
             StackPane imgPane = new StackPane(copy);
-            imgPane.setPrefWidth(sizeImg);
+            imgPane.setPrefWidth(widthImg);
             imgPane.setAlignment(Pos.CENTER);
             this.setOnClick(imgPane,Filtre.TYPE_MUSIQUE,eco.getArtiste().getNom(),null,eco.getAlbum().getNom(),-1,frame);
 
@@ -427,6 +419,7 @@ public class ImgPane extends HBox {
             VBox noms = new VBox(musName,artName);
             noms.setPrefWidth(0.38*Tailles.WIDTH_LISTE);
             noms.setAlignment(Pos.CENTER_LEFT);
+            noms.setPadding(new Insets(0,0,0,10));
 
             ResourceBundle language = Langue.bundle;
             Label nature = new Label(eco.getNature() ? language.getString("listened") : language.getString("skipped"));
@@ -519,6 +512,7 @@ public class ImgPane extends HBox {
             if (nomAlbum != null)
                 f.setAlbum(nomAlbum);
             frame.actualiser();
+            ImgPane.resetTitres();
         });
     }
 

@@ -1,6 +1,7 @@
 package mystats.mystats.utils;
 
 public class Tailles {
+    private static boolean hidden_filters = false;
     public static double WIDTH_SCREEN;
     public static double HEIGHT_SCREEN;
     public static double WIDTH_HEADER;
@@ -23,12 +24,25 @@ public class Tailles {
         HEIGHT_HEADER = HEIGHT_SCREEN * 0.15;
         HEIGHT_LOGO = HEIGHT_SCREEN * 0.1;
         HEIGHT_MINI_LOGO = HEIGHT_LOGO * 0.2;
-        WIDTH_FILTRES = WIDTH_SCREEN * 0.175;
+        if (!hidden_filters) {
+            WIDTH_FILTRES = WIDTH_SCREEN * 0.175;
+            WIDTH_LISTE = WIDTH_SCREEN - WIDTH_FILTRES;
+            WIDTH_SCROLL = WIDTH_LISTE - 15;
+        } else {
+            WIDTH_FILTRES = 0;
+            WIDTH_LISTE = WIDTH_SCREEN - WIDTH_FILTRES;
+            WIDTH_SCROLL = WIDTH_LISTE - 15;
+        }
         HEIGHT_FILTRES = HEIGHT_SCREEN - HEIGHT_HEADER;
-        WIDTH_LISTE = WIDTH_SCREEN - WIDTH_FILTRES;
         HEIGHT_LISTE = HEIGHT_FILTRES;
-        WIDTH_SCROLL = WIDTH_LISTE - 15;
         HEIGHT_SCROLL = (HEIGHT_LISTE - 10) * 0.90;
     }
 
+    public static void changeFiltresHidden() {
+        hidden_filters = !hidden_filters;
+    }
+
+    public static boolean areFiltersHidden() {
+        return hidden_filters;
+    }
 }
