@@ -4,14 +4,17 @@
 <?import javafx.scene.layout.*?>
 
 <HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="mystats.mystats.VueEcoutes">
-    <GridPane fx:id="gridFiltres" vgap="25" hgap="20">
-        <Label fx:id="lblListened" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="very-low-size,white"/>
-        <CheckBox fx:id="cbEcoutees" onAction="#nature" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-        <Label fx:id="lblSkipped" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="very-low-size,white"/>
-        <CheckBox fx:id="cbSkippees" onAction="#nature" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-        <Label fx:id="lblArtist" GridPane.columnIndex="0" GridPane.rowIndex="5" styleClass="very-low-size,white"/>
-        <TextField fx:id="artName" GridPane.columnIndex="1" GridPane.rowIndex="5" onKeyReleased="#changeArtName"/>
-    </GridPane>
+    <VBox fx:id="paneFiltres">
+        <Label fx:id="cacherFiltres" text="🔗️" styleClass="clickable,medium-size" onMouseClicked="#cacherFiltres"/>
+        <GridPane fx:id="gridFiltres">
+            <Label fx:id="lblListened" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="very-low-size,white"/>
+            <CheckBox fx:id="cbEcoutees" onAction="#nature" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <Label fx:id="lblSkipped" GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="very-low-size,white"/>
+            <CheckBox fx:id="cbSkippees" onAction="#nature" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+            <Label fx:id="lblArtist" GridPane.columnIndex="0" GridPane.rowIndex="5" styleClass="very-low-size,white"/>
+            <TextField fx:id="artName" GridPane.columnIndex="1" GridPane.rowIndex="5" onKeyReleased="#changeArtName"/>
+        </GridPane>
+    </VBox>
     <BorderPane fx:id="vuePrincipale" styleClass="transparent">
         <center>
             <ScrollPane fx:id="scroll" styleClass="scroll-pane">
